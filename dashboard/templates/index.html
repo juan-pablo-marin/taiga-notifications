@@ -26,6 +26,8 @@
   .empty { padding: 20px; text-align: center; color: #999; background: white; border-radius: 0 0 6px 6px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
   .banner { background: #fdecea; border: 1px solid #e74c3c; color: #c0392b; padding: 15px; border-radius: 8px; margin-bottom: 20px; text-align: center; }
   .note { margin-top: 20px; text-align: center; color: #999; font-size: 0.82em; }
+  a { color: #2980b9; text-decoration: none; font-weight: 600; }
+  a:hover { text-decoration: underline; color: #1a5276; }
 </style>
 </head>
 <body>
@@ -47,7 +49,7 @@
 {% else %}
 <table><thead><tr><th>Tipo</th><th>Ref</th><th>Asunto</th><th>Responsable</th><th>Usuario</th><th>Fecha</th><th>Estado</th></tr></thead><tbody>
 {% for it in grouped_due.overdue %}
-<tr><td>{{ it.type }}</td><td>#{{ it.ref }}</td><td>{{ it.subject }}</td><td>{{ it.assignee_label }}</td><td>{{ it.username }}</td><td>{{ it.due_date_display }}</td><td>{{ it.status }}</td></tr>
+<tr><td>{{ it.type }}</td><td>{% if it.url %}<a href="{{ it.url }}" target="_blank">#{{ it.ref }}</a>{% else %}#{{ it.ref }}{% endif %}</td><td>{{ it.subject }}</td><td>{{ it.assignee_label }}</td><td>{{ it.username }}</td><td>{{ it.due_date_display }}</td><td>{{ it.status }}</td></tr>
 {% endfor %}
 </tbody></table>
 {% endif %}
@@ -60,7 +62,7 @@
 {% else %}
 <table><thead><tr><th>Tipo</th><th>Ref</th><th>Asunto</th><th>Responsable</th><th>Usuario</th><th>Fecha</th><th>Estado</th></tr></thead><tbody>
 {% for it in grouped_due.today %}
-<tr><td>{{ it.type }}</td><td>#{{ it.ref }}</td><td>{{ it.subject }}</td><td>{{ it.assignee_label }}</td><td>{{ it.username }}</td><td>{{ it.due_date_display }}</td><td>{{ it.status }}</td></tr>
+<tr><td>{{ it.type }}</td><td>{% if it.url %}<a href="{{ it.url }}" target="_blank">#{{ it.ref }}</a>{% else %}#{{ it.ref }}{% endif %}</td><td>{{ it.subject }}</td><td>{{ it.assignee_label }}</td><td>{{ it.username }}</td><td>{{ it.due_date_display }}</td><td>{{ it.status }}</td></tr>
 {% endfor %}
 </tbody></table>
 {% endif %}
@@ -73,7 +75,7 @@
 {% else %}
 <table><thead><tr><th>Tipo</th><th>Ref</th><th>Asunto</th><th>Responsable</th><th>Usuario</th><th>Fecha</th><th>Estado</th></tr></thead><tbody>
 {% for it in grouped_due.tomorrow %}
-<tr><td>{{ it.type }}</td><td>#{{ it.ref }}</td><td>{{ it.subject }}</td><td>{{ it.assignee_label }}</td><td>{{ it.username }}</td><td>{{ it.due_date_display }}</td><td>{{ it.status }}</td></tr>
+<tr><td>{{ it.type }}</td><td>{% if it.url %}<a href="{{ it.url }}" target="_blank">#{{ it.ref }}</a>{% else %}#{{ it.ref }}{% endif %}</td><td>{{ it.subject }}</td><td>{{ it.assignee_label }}</td><td>{{ it.username }}</td><td>{{ it.due_date_display }}</td><td>{{ it.status }}</td></tr>
 {% endfor %}
 </tbody></table>
 {% endif %}
@@ -86,7 +88,7 @@
 {% else %}
 <table><thead><tr><th>Tipo</th><th>Ref</th><th>Asunto</th><th>Responsable</th><th>Usuario</th><th>Fecha</th><th>Estado</th></tr></thead><tbody>
 {% for it in grouped_due.future %}
-<tr><td>{{ it.type }}</td><td>#{{ it.ref }}</td><td>{{ it.subject }}</td><td>{{ it.assignee_label }}</td><td>{{ it.username }}</td><td>{{ it.due_date_display }}</td><td>{{ it.status }}</td></tr>
+<tr><td>{{ it.type }}</td><td>{% if it.url %}<a href="{{ it.url }}" target="_blank">#{{ it.ref }}</a>{% else %}#{{ it.ref }}{% endif %}</td><td>{{ it.subject }}</td><td>{{ it.assignee_label }}</td><td>{{ it.username }}</td><td>{{ it.due_date_display }}</td><td>{{ it.status }}</td></tr>
 {% endfor %}
 </tbody></table>
 {% endif %}
@@ -99,7 +101,7 @@
 {% else %}
 <table><thead><tr><th>Tipo</th><th>Ref</th><th>Asunto</th><th>Responsable</th><th>Usuario</th><th>Fecha</th><th>Estado</th></tr></thead><tbody>
 {% for it in grouped_due.nodate %}
-<tr><td>{{ it.type }}</td><td>#{{ it.ref }}</td><td>{{ it.subject }}</td><td>{{ it.assignee_label }}</td><td>{{ it.username }}</td><td>{{ it.due_date_display }}</td><td>{{ it.status }}</td></tr>
+<tr><td>{{ it.type }}</td><td>{% if it.url %}<a href="{{ it.url }}" target="_blank">#{{ it.ref }}</a>{% else %}#{{ it.ref }}{% endif %}</td><td>{{ it.subject }}</td><td>{{ it.assignee_label }}</td><td>{{ it.username }}</td><td>{{ it.due_date_display }}</td><td>{{ it.status }}</td></tr>
 {% endfor %}
 </tbody></table>
 {% endif %}

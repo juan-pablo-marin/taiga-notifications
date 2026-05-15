@@ -32,6 +32,18 @@ def _base_url() -> str:
     return u.rstrip("/")
 
 
+def _project_slug() -> str:
+    return _env_clean("TAIGA_PROJECT_SLUG")
+
+
+def _web_ui_base_url() -> str:
+    """Base URL for Taiga web UI links. Falls back to TAIGA_BASE_URL."""
+    url = _env_clean("TAIGA_WEB_UI_BASE_URL")
+    if not url:
+        url = _env_clean("TAIGA_BASE_URL")
+    return url.rstrip("/") if url else ""
+
+
 def _project_id() -> str:
     p = _env_clean("TAIGA_PROJECT_ID")
     if not p:
@@ -253,12 +265,23 @@ def _username_from_item(item: dict[str, Any]) -> str:
     return "-"
 
 
+def _build_item_url(item_type: str, ref: int | None) -> str:
+    """Build the Taiga web UI URL for a task or userstory."""
+    base = _web_ui_base_url()
+    slug = _project_slug()
+    if not base or not slug or ref is None:
+        return ""
+    kind = "us" if item_type == "userstory" else "task"
+    return f"{base}/project/{slug}/{kind}/{ref}"
+
+
 def normalize_item(raw: dict[str, Any], item_type: str) -> dict[str, Any]:
     due = parse_due_date(raw)
     assignee_key, assignee_label = assignee_key_and_label(raw)
+    ref = raw.get("ref")
     return {
         "type": item_type,
-        "ref": raw.get("ref"),
+        "ref": ref,
         "subject": raw.get("subject") or "Sin título",
         "status": status_label(raw),
         "due_date": due.isoformat() if due else None,
@@ -266,6 +289,7 @@ def normalize_item(raw: dict[str, Any], item_type: str) -> dict[str, Any]:
         "assignee_key": assignee_key,
         "assignee_label": assignee_label,
         "username": _username_from_item(raw),
+        "url": _build_item_url(item_type, ref),
     }
 
 
