@@ -2,4 +2,4 @@
 # minuto hora - 08:28 todos los dias
 # 1) Enviar notificaciones Discord
 # 2) Generar HTML de tareas activas (siempre, independiente de si remind fallo)
-45 09 * * * /scripts/remind.sh ; /scripts/export_tasks_html.sh /output/tareas_activas.html
+00 08 * * * /scripts/remind.sh ; /scripts/export_tasks_html.sh /output/tareas_activas.html
