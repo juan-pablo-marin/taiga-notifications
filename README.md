@@ -54,3 +54,4 @@ ports:
 ## Variables
 
 Resumen en `.env.example`. El tablero usa las mismas `TAIGA_*` que el notificador; no escribe en Taiga ni usa bot de Discord.
+# taiga-notifications
