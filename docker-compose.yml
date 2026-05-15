@@ -1,0 +1,38 @@
+services:
+  taiga-discord-reminders:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: taiga-discord-reminders
+    restart: unless-stopped
+    env_file:
+      - .env
+    environment:
+      TZ: ${TZ:-America/Bogota}
+    volumes:
+      - taiga-reminders-data:/data
+      - ./output:/output
+
+  taiga-dashboard:
+    build:
+      context: ./dashboard
+      dockerfile: Dockerfile
+    container_name: taiga-dashboard
+    restart: unless-stopped
+    env_file:
+      - .env
+    environment:
+      TZ: ${TZ:-America/Bogota}
+      TAIGA_DASHBOARD_PORT: "8086"
+    ports:
+      # 0.0.0.0 para acceso externo en el VPS
+      - "0.0.0.0:${TAIGA_DASHBOARD_PUBLISH_PORT:-8086}:8086"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8086/healthz"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 15s
+
+volumes:
+  taiga-reminders-data:

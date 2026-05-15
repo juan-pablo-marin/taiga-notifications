@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tareas Activas — Taiga{% if project_name %} {{ project_name }}{% endif %}</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f5f7fa; color: #333; padding: 20px; }
+  h1 { text-align: center; margin-bottom: 10px; color: #2c3e50; }
+  .meta { text-align: center; color: #666; margin-bottom: 30px; font-size: 0.9em; }
+  .filters-wrap { text-align: center; margin-bottom: 20px; }
+  .filters { display: inline-block; color: #555; font-size: 0.85em; background: #eef2f7; padding: 8px 15px; border-radius: 6px; }
+  .section { margin-bottom: 30px; }
+  .section h2 { padding: 10px 15px; border-radius: 6px 6px 0 0; margin: 0; font-size: 1.1em; }
+  .overdue h2 { background: #e74c3c; color: white; }
+  .today h2 { background: #f39c12; color: white; }
+  .tomorrow h2 { background: #3498db; color: white; }
+  .future h2 { background: #27ae60; color: white; }
+  .nodate h2 { background: #95a5a6; color: white; }
+  table { width: 100%; border-collapse: collapse; background: white; box-shadow: 0 2px 4px rgba(0,0,0,0.1); border-radius: 0 0 6px 6px; overflow: hidden; }
+  th, td { padding: 10px 12px; text-align: left; border-bottom: 1px solid #eee; font-size: 0.9em; }
+  th { background: #f8f9fa; font-weight: 600; color: #555; }
+  tr:hover { background: #f0f7ff; }
+  .count { font-size: 0.85em; opacity: 0.9; margin-left: 8px; }
+  .empty { padding: 20px; text-align: center; color: #999; background: white; border-radius: 0 0 6px 6px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+  .banner { background: #fdecea; border: 1px solid #e74c3c; color: #c0392b; padding: 15px; border-radius: 8px; margin-bottom: 20px; text-align: center; }
+  .note { margin-top: 20px; text-align: center; color: #999; font-size: 0.82em; }
+</style>
+</head>
+<body>
+<h1>📋 Tareas Activas — Taiga {% if project_name %}{{ project_name }}{% else %}#{{ project_id }}{% endif %}</h1>
+<div class="meta">Generado: {{ generated_at }} {{ tz_label }} | Proyecto: {% if project_name %}{{ project_name }}{% else %}#{{ project_id }}{% endif %} | Total: {{ item_count }} items</div>
+
+{% if error %}
+<div class="banner"><strong>No se pudo cargar Taiga.</strong> {{ error }}</div>
+{% else %}
+
+{% if all_statuses|length > 0 %}
+<div class="filters-wrap"><div class="filters">📌 Estados incluidos: {{ all_statuses|join(', ') }}</div></div>
+{% endif %}
+
+<div class="section overdue">
+<h2>🔴 VENCIDAS<span class="count">({{ grouped_due.overdue|length }})</span></h2>
+{% if grouped_due.overdue|length == 0 %}
+<div class="empty">No hay items en esta categoría</div>
+{% else %}
+<table><thead><tr><th>Tipo</th><th>Ref</th><th>Asunto</th><th>Responsable</th><th>Usuario</th><th>Fecha</th><th>Estado</th></tr></thead><tbody>
+{% for it in grouped_due.overdue %}
+<tr><td>{{ it.type }}</td><td>#{{ it.ref }}</td><td>{{ it.subject }}</td><td>{{ it.assignee_label }}</td><td>{{ it.username }}</td><td>{{ it.due_date_display }}</td><td>{{ it.status }}</td></tr>
+{% endfor %}
+</tbody></table>
+{% endif %}
+</div>
+
+<div class="section today">
+<h2>🟠 VENCEN HOY ({{ today_str }})<span class="count">({{ grouped_due.today|length }})</span></h2>
+{% if grouped_due.today|length == 0 %}
+<div class="empty">No hay items en esta categoría</div>
+{% else %}
+<table><thead><tr><th>Tipo</th><th>Ref</th><th>Asunto</th><th>Responsable</th><th>Usuario</th><th>Fecha</th><th>Estado</th></tr></thead><tbody>
+{% for it in grouped_due.today %}
+<tr><td>{{ it.type }}</td><td>#{{ it.ref }}</td><td>{{ it.subject }}</td><td>{{ it.assignee_label }}</td><td>{{ it.username }}</td><td>{{ it.due_date_display }}</td><td>{{ it.status }}</td></tr>
+{% endfor %}
+</tbody></table>
+{% endif %}
+</div>
+
+<div class="section tomorrow">
+<h2>🔵 VENCEN MAÑANA ({{ tomorrow_str }})<span class="count">({{ grouped_due.tomorrow|length }})</span></h2>
+{% if grouped_due.tomorrow|length == 0 %}
+<div class="empty">No hay items en esta categoría</div>
+{% else %}
+<table><thead><tr><th>Tipo</th><th>Ref</th><th>Asunto</th><th>Responsable</th><th>Usuario</th><th>Fecha</th><th>Estado</th></tr></thead><tbody>
+{% for it in grouped_due.tomorrow %}
+<tr><td>{{ it.type }}</td><td>#{{ it.ref }}</td><td>{{ it.subject }}</td><td>{{ it.assignee_label }}</td><td>{{ it.username }}</td><td>{{ it.due_date_display }}</td><td>{{ it.status }}</td></tr>
+{% endfor %}
+</tbody></table>
+{% endif %}
+</div>
+
+<div class="section future">
+<h2>🟢 FUTURAS<span class="count">({{ grouped_due.future|length }})</span></h2>
+{% if grouped_due.future|length == 0 %}
+<div class="empty">No hay items en esta categoría</div>
+{% else %}
+<table><thead><tr><th>Tipo</th><th>Ref</th><th>Asunto</th><th>Responsable</th><th>Usuario</th><th>Fecha</th><th>Estado</th></tr></thead><tbody>
+{% for it in grouped_due.future %}
+<tr><td>{{ it.type }}</td><td>#{{ it.ref }}</td><td>{{ it.subject }}</td><td>{{ it.assignee_label }}</td><td>{{ it.username }}</td><td>{{ it.due_date_display }}</td><td>{{ it.status }}</td></tr>
+{% endfor %}
+</tbody></table>
+{% endif %}
+</div>
+
+<div class="section nodate">
+<h2>⚪ SIN FECHA DE VENCIMIENTO<span class="count">({{ grouped_due.nodate|length }})</span></h2>
+{% if grouped_due.nodate|length == 0 %}
+<div class="empty">No hay items en esta categoría</div>
+{% else %}
+<table><thead><tr><th>Tipo</th><th>Ref</th><th>Asunto</th><th>Responsable</th><th>Usuario</th><th>Fecha</th><th>Estado</th></tr></thead><tbody>
+{% for it in grouped_due.nodate %}
+<tr><td>{{ it.type }}</td><td>#{{ it.ref }}</td><td>{{ it.subject }}</td><td>{{ it.assignee_label }}</td><td>{{ it.username }}</td><td>{{ it.due_date_display }}</td><td>{{ it.status }}</td></tr>
+{% endfor %}
+</tbody></table>
+{% endif %}
+</div>
+
+<p class="note">
+  Solo lectura. Muestra tasks y user stories con <code>status__is_closed=false</code> en Taiga.
+  Zona horaria: <code>{{ tz_label }}</code>.
+</p>
+{% endif %}
+</body>
+</html>

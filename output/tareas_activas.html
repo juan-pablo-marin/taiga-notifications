@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tareas Activas - Taiga APE</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f5f7fa; color: #333; padding: 20px; }
+  h1 { text-align: center; margin-bottom: 10px; color: #2c3e50; }
+  .meta { text-align: center; color: #666; margin-bottom: 30px; font-size: 0.9em; }
+  .filters-wrap { text-align: center; margin-bottom: 20px; }
+  .filters { display: inline-block; color: #555; font-size: 0.85em; background: #eef2f7; padding: 8px 15px; border-radius: 6px; }
+  .section { margin-bottom: 30px; }
+  .section h2 { padding: 10px 15px; border-radius: 6px 6px 0 0; margin: 0; font-size: 1.1em; }
+  .overdue h2 { background: #e74c3c; color: white; }
+  .today h2 { background: #f39c12; color: white; }
+  .tomorrow h2 { background: #3498db; color: white; }
+  .future h2 { background: #27ae60; color: white; }
+  .nodate h2 { background: #95a5a6; color: white; }
+  table { width: 100%; border-collapse: collapse; background: white; box-shadow: 0 2px 4px rgba(0,0,0,0.1); border-radius: 0 0 6px 6px; overflow: hidden; }
+  th, td { padding: 10px 12px; text-align: left; border-bottom: 1px solid #eee; font-size: 0.9em; }
+  th { background: #f8f9fa; font-weight: 600; color: #555; }
+  tr:hover { background: #f0f7ff; }
+  .count { font-size: 0.85em; opacity: 0.9; margin-left: 8px; }
+  .empty { padding: 20px; text-align: center; color: #999; background: white; border-radius: 0 0 6px 6px; }
+</style>
+</head>
+<body>
+<h1>📋 Tareas Activas — Taiga APE</h1>
+<div class='meta'>Generado: 2026-05-15 09:46:21 -05 | Proyecto: agencia-publica-de-empleo-del-sena-ape | Total: 291 items</div>
+<div class='filters-wrap'><div class='filters'>📌 Estados incluidos: New, Ready, In progress, Code Review, Ready for test, QA Testing, QA rejected</div></div>
+<div class='section overdue'>
+<h2>🔴 VENCIDAS<span class='count'>(6)</span></h2>
+<table><thead><tr><th>Tipo</th><th>Ref</th><th>Asunto</th><th>Responsable</th><th>Usuario</th><th>Fecha</th><th>Estado</th></tr></thead><tbody>
+<tr><td>userstory</td><td>#390</td><td>Protocolo de encendido y apagado del sistema de información.</td><td>Fredy Andres Ramirez Rodas</td><td>Fredy_Ramirez</td><td>2026-04-30</td><td>New</td></tr>
+<tr><td>task</td><td>#401</td><td>Actualizar documentación de mensajes de respuesta con el nuevo estándar</td><td>Giovanny Arias</td><td>gariasa1902</td><td>2026-05-08</td><td>In progress</td></tr>
+<tr><td>task</td><td>#786</td><td>T-01.1: Fundación compartida (tipos, mock, rutas, hook)</td><td>Carlos Guillermo Henao Velasqez</td><td>carlosHV</td><td>2026-05-13</td><td>In progress</td></tr>
+<tr><td>task</td><td>#787</td><td>T-01.2: Estructura de página + grid de cards</td><td>Carlos Guillermo Henao Velasqez</td><td>carlosHV</td><td>2026-05-14</td><td>In progress</td></tr>
+<tr><td>userstory</td><td>#765</td><td>Revisión y Análisis de Procedimientos Almacenados y Triggers en el Código Java y Base de Datos de APE para el Proceso de Migración</td><td>Fredy Andres Ramirez Rodas</td><td>Fredy_Ramirez</td><td>2026-05-14</td><td>Ready for test</td></tr>
+<tr><td>userstory</td><td>#810</td><td>Creación de Librería del Componente de Calendario del CMS de APE en React</td><td>Alejandro Vásquez</td><td>Javam26</td><td>2026-05-14</td><td>New</td></tr>
+</tbody></table>
+</div>
+<div class='section today'>
+<h2>🟠 VENCEN HOY (2026-05-15)<span class='count'>(10)</span></h2>
+<table><thead><tr><th>Tipo</th><th>Ref</th><th>Asunto</th><th>Responsable</th><th>Usuario</th><th>Fecha</th><th>Estado</th></tr></thead><tbody>
+<tr><td>task</td><td>#788</td><td>T-01.3: Filtros, búsqueda y paginación</td><td>Carlos Guillermo Henao Velasqez</td><td>carlosHV</td><td>2026-05-15</td><td>In progress</td></tr>
+<tr><td>task</td><td>#789</td><td>T-01.4: Estados de carga, error y resultados vacíos</td><td>Carlos Guillermo Henao Velasqez</td><td>carlosHV</td><td>2026-05-15</td><td>In progress</td></tr>
+<tr><td>task</td><td>#790</td><td>T-01.5: Accesibilidad, responsive fino y tests E2E</td><td>Carlos Guillermo Henao Velasqez</td><td>carlosHV</td><td>2026-05-15</td><td>New</td></tr>
+<tr><td>task</td><td>#796</td><td>T-02.1: Fundación del detalle + layout sticky</td><td>julian vasquez</td><td>julianvm</td><td>2026-05-15</td><td>In progress</td></tr>
+<tr><td>userstory</td><td>#374</td><td>Refactorización y estandarización mensajes de respuesta en servicios y microservicios diseñados para APE</td><td>mateo herrera salazar</td><td>Mateohs</td><td>2026-05-15</td><td>In progress</td></tr>
+<tr><td>userstory</td><td>#593</td><td>Refactorización y Estandarización de Respuestas HTTP en el microservicio user-cv-service</td><td>Giovanny Arias</td><td>gariasa1902</td><td>2026-05-15</td><td>Code Review</td></tr>
+<tr><td>userstory</td><td>#754</td><td>Verificación de Login y Registro de Usuarios en la Plataforma Víctimas con Validación RUV</td><td>cristian andres calambas santa</td><td>crisDev</td><td>2026-05-15</td><td>New</td></tr>
+<tr><td>userstory</td><td>#755</td><td>Realizar el analisis de la arquitectura de roles y permisos APE en el nuevo modelo</td><td>Anderson Rincón</td><td>Anderson_RS</td><td>2026-05-15</td><td>New</td></tr>
+<tr><td>userstory</td><td>#781</td><td>Explorar convocatorias laborales</td><td>Carlos Guillermo Henao Velasqez</td><td>carlosHV</td><td>2026-05-15</td><td>New</td></tr>
+<tr><td>userstory</td><td>#785</td><td>Consultar detalle de convocatoria y aplicar</td><td>julian vasquez</td><td>julianvm</td><td>2026-05-15</td><td>New</td></tr>
+</tbody></table>
+</div>
+<div class='section tomorrow'>
+<h2>🔵 VENCEN MAÑANA (2026-05-16)<span class='count'>(0)</span></h2>
+<div class='empty'>No hay items en esta categoría</div>
+</div>
+<div class='section future'>
+<h2>🟢 FUTURAS<span class='count'>(8)</span></h2>
+<table><thead><tr><th>Tipo</th><th>Ref</th><th>Asunto</th><th>Responsable</th><th>Usuario</th><th>Fecha</th><th>Estado</th></tr></thead><tbody>
+<tr><td>task</td><td>#797</td><td>T-02.2: Información general, condiciones e instrumentos de selección</td><td>julian vasquez</td><td>julianvm</td><td>2026-05-18</td><td>In progress</td></tr>
+<tr><td>task</td><td>#798</td><td>T-02.3: Sistema de acordeones (6 secciones)</td><td>julian vasquez</td><td>julianvm</td><td>2026-05-18</td><td>In progress</td></tr>
+<tr><td>task</td><td>#799</td><td>T-02.4: Cronograma interactivo + mock Aplicar</td><td>julian vasquez</td><td>julianvm</td><td>2026-05-18</td><td>In progress</td></tr>
+<tr><td>task</td><td>#800</td><td>T-02.5: Estados, accesibilidad, responsive y tests E2E</td><td>julian vasquez</td><td>julianvm</td><td>2026-05-18</td><td>In progress</td></tr>
+<tr><td>userstory</td><td>#641</td><td>Implementación de autenticación y autorización con Keycloak en el portal FUC</td><td>Anderson Rincón</td><td>Anderson_RS</td><td>2026-05-18</td><td>New</td></tr>
+<tr><td>task</td><td>#759</td><td>Inicializar app Next.js y estructura base Screaming Architecture</td><td>Jaider Esteban Espinosa Mesa</td><td>estebanvfx</td><td>2026-05-22</td><td>Ready for test</td></tr>
+<tr><td>userstory</td><td>#758</td><td>Setup de estructura Screaming Architecture y herramientas</td><td>Jaider Esteban Espinosa Mesa</td><td>estebanvfx</td><td>2026-05-22</td><td>New</td></tr>
+<tr><td>userstory</td><td>#608</td><td>Construcción de Matriz de Tiempos de Logueo basada en Keycloak para FUC, RAV y APE</td><td>Anderson Rincón</td><td>Anderson_RS</td><td>2026-05-22</td><td>New</td></tr>
+</tbody></table>
+</div>
+<div class='section nodate'>
+<h2>⚪ SIN FECHA DE VENCIMIENTO<span class='count'>(267)</span></h2>
+<table><thead><tr><th>Tipo</th><th>Ref</th><th>Asunto</th><th>Responsable</th><th>Usuario</th><th>Fecha</th><th>Estado</th></tr></thead><tbody>
+<tr><td>task</td><td>#258</td><td>Configurar límites globales por IP y por usuario autenticado</td><td>cristian andres calambas santa</td><td>crisDev</td><td>Sin fecha</td><td>New</td></tr>
+<tr><td>task</td><td>#259</td><td>Implementar registro de eventos de bloqueo en logs del sistema</td><td>cristian andres calambas santa</td><td>crisDev</td><td>Sin fecha</td><td>New</td></tr>
+<tr><td>task</td><td>#260</td><td>Pruebas unitarias del middleware de Rate Limiting</td><td>cristian andres calambas santa</td><td>crisDev</td><td>Sin fecha</td><td>New</td></tr>
+<tr><td>task</td><td>#282</td><td>Diseño de nueva DB en PostgreSQL</td><td>mateo herrera salazar</td><td>Mateohs</td><td>Sin fecha</td><td>QA Testing</td></tr>
+<tr><td>task</td><td>#298</td><td>Revisar y documentar la estructura del token JWT y los roles/permisos definidos en el endpoint de APE</td><td>cristian andres calambas santa</td><td>crisDev</td><td>Sin fecha</td><td>New</td></tr>
+<tr><td>task</td><td>#299</td><td>Implementar la validación del token JWT de APE en el backend de RAV</td><td>cristian andres calambas santa</td><td>crisDev</td><td>Sin fecha</td><td>New</td></tr>
+<tr><td>task</td><td>#300</td><td>Pruebas de validación de roles y permisos en el sistema</td><td>cristian andres calambas santa</td><td>crisDev</td><td>Sin fecha</td><td>New</td></tr>
+<tr><td>task</td><td>#586</td><td>Implementar sidebar colapsable interactiva con pasos de ruta</td><td>Carlos Guillermo Henao Velasqez</td><td>carlosHV</td><td>Sin fecha</td><td>In progress</td></tr>
+<tr><td>task</td><td>#656</td><td>Modificación de estructura JSON para cumplir con los requerimientos del objeto de respuesta.</td><td>Giovanny Arias</td><td>gariasa1902</td><td>Sin fecha</td><td>New</td></tr>
+<tr><td>task</td><td>#657</td><td>Validación de respuestas del servicio.</td><td>cristian andres calambas santa</td><td>crisDev</td><td>Sin fecha</td><td>New</td></tr>
+<tr><td>task</td><td>#668</td><td>Integración RHF + Zod para Datos de Identificación y Estado Civil</td><td>Sin asignar</td><td>-</td><td>Sin fecha</td><td>New</td></tr>
+<tr><td>task</td><td>#669</td><td>Estado y Validaciones - Domicilio, Contacto y Ocupación</td><td>Sin asignar</td><td>-</td><td>Sin fecha</td><td>New</td></tr>
+<tr><td>task</td><td>#670</td><td>Estado y Validaciones - Sisbén, Perfil y Logros</td><td>Sin asignar</td><td>-</td><td>Sin fecha</td><td>New</td></tr>
+<tr><td>task</td><td>#672</td><td>Integración RHF + Zod en los bloques de Búsqueda de Institución</td><td>Sin asignar</td><td>-</td><td>Sin fecha</td><td>New</td></tr>
+<tr><td>task</td><td>#673</td><td>Integración RHF + Zod en el Modal "Agregar Estudio"</td><td>Sin asignar</td><td>-</td><td>Sin fecha</td><td>New</td></tr>
+<tr><td>task</td><td>#677</td><td>Finalizar el flujo completo de "Documentos Varios & Capacitación"</td><td>Sin asignar</td><td>-</td><td>Sin fecha</td><td>New</td></tr>
+<tr><td>task</td><td>#678</td><td>Implementar validaciones del formulario con React Hook Form y Zod</td><td>Sin asignar</td><td>-</td><td>Sin fecha</td><td>New</td></tr>
+<tr><td>task</td><td>#680</td><td>Implementar flujo de “Seleccione Dialecto”</td><td>Sin asignar</td><td>-</td><td>Sin fecha</td><td>New</td></tr>
+<tr><td>task</td><td>#681</td><td>Implementar validaciones con Zod + React Hook Form</td><td>Sin asignar</td><td>-</td><td>Sin fecha</td><td>New</td></tr>
+<tr><td>task</td><td>#682</td><td>QA / Validación funcional</td><td>Sin asignar</td><td>-</td><td>Sin fecha</td><td>New</td></tr>
+<tr><td>task</td><td>#709</td><td>Implementar reglas de validación por tipo de campo en frontend.</td><td>Sin asignar</td><td>-</td><td>Sin fecha</td><td>New</td></tr>
+<tr><td>task</td><td>#710</td><td>Mostrar mensajes de error por campo con criterio uniforme.</td><td>Sin asignar</td><td>-</td><td>Sin fecha</td><td>New</td></tr>
+<tr><td>task</td><td>#711</td><td>Validar y proponer rediseño: Modal Buscar ocupación</td><td>Sin asignar</td><td>-</td><td>Sin fecha</td><td>New</td></tr>
+<tr><td>task</td><td>#712</td><td>Implementar validaciones en "Agregar ocupación": Checkboxes y longitud de "Otras funciones"</td><td>Sin asignar</td><td>-</td><td>Sin fecha</td><td>New</td></tr>
+<tr><td>task</td><td>#714</td><td>Definición e Integración de Esquemas:</td><td>Sin asignar</td><td>-</td><td>Sin fecha</td><td>New</td></tr>
+<tr><td>task</td><td>#715</td><td>Gestión de Estado y Ciclo de Vida de Campos:</td><td>Sin asignar</td><td>-</td><td>Sin fecha</td><td>New</td></tr>
+<tr><td>task</td><td>#716</td><td>Renderizado y Sincronización de Errores (UI)</td><td>Sin asignar</td><td>-</td><td>Sin fecha</td><td>New</td></tr>
+<tr><td>task</td><td>#717</td><td>Testing de Integración y Regresión</td><td>Sin asignar</td><td>-</td><td>Sin fecha</td><td>New</td></tr>
+<tr><td>task</td><td>#719</td><td>Definición e Integración de Esquemas:</td><td>Sin asignar</td><td>-</td><td>Sin fecha</td><td>New</td></tr>
+<tr><td>task</td><td>#720</td><td>Gestión de Estado y Ciclo de Vida de Selecciones:</td><td>Sin asignar</td><td>-</td><td>Sin fecha</td><td>New</td></tr>
+<tr><td>task</td><td>#721</td><td>Renderizado y Sincronización de Errores (UI)</td><td>Sin asignar</td><td>-</td><td>Sin fecha</td><td>New</td></tr>
+<tr><td>task</td><td>#722</td><td>Testing de Integración y Regresión</td><td>Sin asignar</td><td>-</td><td>Sin fecha</td><td>New</td></tr>
+<tr><td>task</td><td>#753</td><td>Reemplazar clases text-* y rounded-* por tokens semánticos</td><td>julian vasquez</td><td>julianvm</td><td>Sin fecha</td><td>New</td></tr>
+<tr><td>task</td><td>#760</td><td>Configurar paths, lint, type-check y build de transactional-portal</td><td>Jaider Esteban Espinosa Mesa</td><td>estebanvfx</td><td>Sin fecha</td><td>Ready for test</td></tr>
+<tr><td>task</td><td>#761</td><td>Crear documentacion de arquitectura y migracion</td><td>Jaider Esteban Espinosa Mesa</td><td>estebanvfx</td><td>Sin fecha</td><td>New</td></tr>
+<tr><td>task</td><td>#822</td><td>Migrar shell de rutas Next.js App Router y layouts</td><td>Jaider Esteban Espinosa Mesa</td><td>estebanvfx</td><td>Sin fecha</td><td>In progress</td></tr>
+<tr><td>task</td><td>#823</td><td>Migrar layout compartido: header, navbar, footer, gov-bar y bottom-nav</td><td>Jaider Esteban Espinosa Mesa</td><td>estebanvfx</td><td>Sin fecha</td><td>New</td></tr>
+<tr><td>task</td><td>#824</td><td>Migrar shared UI primitives y componentes base</td><td>Sin asignar</td><td>-</td><td>Sin fecha</td><td>New</td></tr>
+<tr><td>task</td><td>#825</td><td>Migrar feature Home</td><td>Jaider Esteban Espinosa Mesa</td><td>estebanvfx</td><td>Sin fecha</td><td>In progress</td></tr>
+<tr><td>task</td><td>#826</td><td>Migrar feature Jobs y Vacantes</td><td>Jaider Esteban Espinosa Mesa</td><td>estebanvfx</td><td>Sin fecha</td><td>New</td></tr>
+<tr><td>task</td><td>#827</td><td>Migrar feature Resume: layout, tabs y navegación</td><td>Mateo Hernandez</td><td>MateoHer_1904</td><td>Sin fecha</td><td>In progress</td></tr>
+<tr><td>task</td><td>#828</td><td>Migrar Resume: datos básicos y educación</td><td>Mateo Hernandez</td><td>MateoHer_1904</td><td>Sin fecha</td><td>New</td></tr>
+<tr><td>task</td><td>#829</td><td>Migrar feature Instructores y Ofertas</td><td>Jaider Esteban Espinosa Mesa</td><td>estebanvfx</td><td>Sin fecha</td><td>New</td></tr>
+<tr><td>task</td><td>#830</td><td>Migrar feature Profile: ProfileCard e ImageCropper</td><td>Mateo Hernandez</td><td>MateoHer_1904</td><td>Sin fecha</td><td>New</td></tr>
+<tr><td>task</td><td>#831</td><td>Validar migración con lint, type-check, build y QA visual</td><td>Sin asignar</td><td>-</td><td>Sin fecha</td><td>New</td></tr>
+<tr><td>task</td><td>#832</td><td>Migrar Resume: documentos/capacitación e idiomas</td><td>Mateo Hernandez</td><td>MateoHer_1904</td><td>Sin fecha</td><td>New</td></tr>
+<tr><td>task</td><td>#833</td><td>Migrar Resume: experiencia laboral y pasantía</td><td>Mateo Hernandez</td><td>MateoHer_1904</td><td>Sin fecha</td><td>New</td></tr>
+<tr><td>task</td><td>#834</td><td>Migrar Resume: migración y otros datos</td><td>Mateo Hernandez</td><td>MateoHer_1904</td><td>Sin fecha</td><td>In progress</td></tr>
+<tr><td>task</td><td>#835</td><td>Migrar Resume: competencias laborales</td><td>mateo herrera salazar</td><td>Mateohs</td><td>Sin fecha</td><td>New</td></tr>
+<tr><td>userstory</td><td>#756</td><td>EndPoint de registro de Personas y empresa</td><td>Sin asignar</td><td>-</td><td>Sin fecha</td><td>New</td></tr>
+<tr><td>userstory</td><td>#713</td><td>Validar campos de entrada en el formulario de Migracion</td><td>Sin asignar</td><td>-</td><td>Sin fecha</td><td>New</td></tr>
+<tr><td>userstory</td><td>#671</td><td>Estandarización del formulario “Educación” en Hoja de Vida</td><td>Sin asignar</td><td>-</td><td>Sin fecha</td><td>New</td></tr>
+<tr><td>userstory</td><td>#667</td><td>Estandarización del formulario “Datos básicos” en Hoja de Vida</td><td>Sin asignar</td><td>-</td><td>Sin fecha</td><td>New</td></tr>
+<tr><td>userstory</td><td>#718</td><td>Validar campos de entrada en el formulario de Otros Datos</td><td>Sin asignar</td><td>-</td><td>Sin fecha</td><td>New</td></tr>
+<tr><td>userstory</td><td>#708</td><td>Validar campos de entrada en el formulario de experiencia laboral</td><td>Sin asignar</td><td>-</td><td>Sin fecha</td><td>New</td></tr>
+<tr><td>userstory</td><td>#612</td><td>Protocolo de encendido y apagado del sistema de información.</td><td>Sin asignar</td><td>-</td><td>Sin fecha</td><td>New</td></tr>
+<tr><td>userstory</td><td>#610</td><td>Plan de capacitación de la solución tecnológica.</td><td>Sin asignar</td><td>-</td><td>Sin fecha</td><td>New</td></tr>
+<tr><td>userstory</td><td>#389</td><td>Documentación de la Matriz de Cuentas y Contraseñas de usuarios del sistema</td><td>Fredy Andres Ramirez Rodas</td><td>Fredy_Ramirez</td><td>Sin fecha</td><td>New</td></tr>
+<tr><td>userstory</td><td>#679</td><td>Completar flujo de Seleccione Dialecto y validaciones del paso Idiomas</td><td>Sin asignar</td><td>-</td><td>Sin fecha</td><td>New</td></tr>
+<tr><td>userstory</td><td>#676</td><td>Completar flujo de "Documentos Varios & Capacitacion" con validaciones de formulario</td><td>Sin asignar</td><td>-</td><td>Sin fecha</td><td>New</td></tr>
+<tr><td>userstory</td><td>#340</td><td>Implementar accesibilidad portal APE</td><td>julian vasquez</td><td>julianvm</td><td>Sin fecha</td><td>Ready for test</td></tr>
+<tr><td>userstory</td><td>#375</td><td>Codificación de nuevos microservicios para el sistema APE</td><td>Anderson Rincón</td><td>Anderson_RS</td><td>Sin fecha</td><td>New</td></tr>
+<tr><td>userstory</td><td>#421</td><td>Revisar código base e identificar refactorizaciones</td><td>julian vasquez</td><td>julianvm</td><td>Sin fecha</td><td>Ready for test</td></tr>
+<tr><td>userstory</td><td>#422</td><td>Analizar requerimientos para microservicios</td><td>julian vasquez</td><td>julianvm</td><td>Sin fecha</td><td>Ready for test</td></tr>
+<tr><td>userstory</td><td>#423</td><td>Documentar procesos de despliegue y CI/CD</td><td>julian vasquez</td><td>julianvm</td><td>Sin fecha</td><td>Ready for test</td></tr>
+<tr><td>userstory</td><td>#424</td><td>Análisis exhaustivo de accesibilidad WCAG 2.1 AA</td><td>julian vasquez</td><td>julianvm</td><td>Sin fecha</td><td>Ready for test</td></tr>
+<tr><td>userstory</td><td>#425</td><td>Investigación integración microservicios web modernas</td><td>julian vasquez</td><td>julianvm</td><td>Sin fecha</td><td>Ready for test</td></tr>
+<tr><td>userstory</td><td>#426</td><td>Documentación procesos configuración y despliegue</td><td>julian vasquez</td><td>julianvm</td><td>Sin fecha</td><td>Ready for test</td></tr>
+<tr><td>userstory</td><td>#427</td><td>Refinar visuales sidebar desktop y modal atención</td><td>Carlos Guillermo Henao Velasqez</td><td>carlosHV</td><td>Sin fecha</td><td>Ready for test</td></tr>
+<tr><td>userstory</td><td>#428</td><td>Mejorar estilos e interacciones sidebar desktop</td><td>Carlos Guillermo Henao Velasqez</td><td>carlosHV</td><td>Sin fecha</td><td>Ready for test</td></tr>
+<tr><td>userstory</td><td>#429</td><td>Simplificar logout y documentar sidebar</td><td>Carlos Guillermo Henao Velasqez</td><td>carlosHV</td><td>Sin fecha</td><td>Ready for test</td></tr>
+<tr><td>userstory</td><td>#430</td><td>Agregar icono logout, contornos y hover expand</td><td>Carlos Guillermo Henao Velasqez</td><td>carlosHV</td><td>Sin fecha</td><td>Ready for test</td></tr>
+<tr><td>userstory</td><td>#431</td><td>Revisar arquitectura y estandarizar CI/CD</td><td>julian vasquez</td><td>julianvm</td><td>Sin fecha</td><td>Ready for test</td></tr>
+<tr><td>userstory</td><td>#432</td><td>Analizar integración microservicios y latencia</td><td>julian vasquez</td><td>julianvm</td><td>Sin fecha</td><td>Ready for test</td></tr>
+<tr><td>userstory</td><td>#433</td><td>Documentar workflows GitHub y variables Docker</td><td>julian vasquez</td><td>julianvm</td><td>Sin fecha</td><td>Ready for test</td></tr>
+<tr><td>userstory</td><td>#434</td><td>Automatizar limpieza previews y manejo env vars en CI</td><td>julian vasquez</td><td>julianvm</td><td>Sin fecha</td><td>Ready for test</td></tr>
+<tr><td>userstory</td><td>#435</td><td>Revisar y optimizar código de portales APE</td><td>julian vasquez</td><td>julianvm</td><td>Sin fecha</td><td>Ready for test</td></tr>
+<tr><td>userstory</td><td>#436</td><td>Documentar procesos CI/CD y configurar entornos dev</td><td>julian vasquez</td><td>julianvm</td><td>Sin fecha</td><td>Ready for test</td></tr>
+<tr><td>userstory</td><td>#440</td><td>Automatizar limpieza de previews obsoletos en CI/CD frontend</td><td>julian vasquez</td><td>julianvm</td><td>Sin fecha</td><td>Ready for test</td></tr>
+<tr><td>userstory</td><td>#441</td><td>Investigar prácticas para integración de microservicios APE</td><td>julian vasquez</td><td>julianvm</td><td>Sin fecha</td><td>Ready for test</td></tr>
+<tr><td>userstory</td><td>#442</td><td>Documentar procesos CI/CD actualizados y guías de onboarding</td><td>julian vasquez</td><td>julianvm</td><td>Sin fecha</td><td>Ready for test</td></tr>
+<tr><td>userstory</td><td>#447</td><td>Automatizar limpieza de previews obsoletos y manejo de envs en CI</td><td>julian vasquez</td><td>julianvm</td><td>Sin fecha</td><td>Ready for test</td></tr>
+<tr><td>userstory</td><td>#448</td><td>Revisar y refactorizar código en portales APE</td><td>julian vasquez</td><td>julianvm</td><td>Sin fecha</td><td>Ready for test</td></tr>
+<tr><td>userstory</td><td>#449</td><td>Actualizar docs y pruebas para flujos de deploy</td><td>julian vasquez</td><td>julianvm</td><td>Sin fecha</td><td>Ready for test</td></tr>
+<tr><td>userstory</td><td>#453</td><td>Automatizar limpieza previews y manejo env vars en CI</td><td>julian vasquez</td><td>julianvm</td><td>Sin fecha</td><td>Ready for test</td></tr>
+<tr><td>userstory</td><td>#454</td><td>Optimizar estructura componentes y dependencias por accesibilidad</td><td>julian vasquez</td><td>julianvm</td><td>Sin fecha</td><td>Ready for test</td></tr>
+<tr><td>userstory</td><td>#455</td><td>Ajustar configs dev y actualizar docs de deploy y env vars</td><td>julian vasquez</td><td>julianvm</td><td>Sin fecha</td><td>Ready for test</td></tr>
+<tr><td>userstory</td><td>#456</td><td>Revisión código base para optimizar componentes y accesibilidad</td><td>julian vasquez</td><td>julianvm</td><td>Sin fecha</td><td>Ready for test</td></tr>
+<tr><td>userstory</td><td>#457</td><td>Ajustes en entornos dev y docs de deploy con manejo de env vars</td><td>julian vasquez</td><td>julianvm</td><td>Sin fecha</td><td>Ready for test</td></tr>
+<tr><td>userstory</td><td>#458</td><td>Optimizar paginación y tablas en CNO y validaciones</td><td>Alejandro Vásquez</td><td>Javam26</td><td>Sin fecha</td><td>Ready for test</td></tr>
+<tr><td>userstory</td><td>#459</td><td>Simplificar botones y mejorar sidebar y búsquedas duales</td><td>Alejandro Vásquez</td><td>Javam26</td><td>Sin fecha</td><td>Ready for test</td></tr>
+<tr><td>userstory</td><td>#460</td><td>Ajustar mockups Figma para CMS de Usuarios y Roles</td><td>Alejandro Vásquez</td><td>Javam26</td><td>Sin fecha</td><td>In progress</td></tr>
+<tr><td>userstory</td><td>#461</td><td>Simplificar botones, sidebar y estilos búsquedas duales</td><td>Alejandro Vásquez</td><td>Javam26</td><td>Sin fecha</td><td>In progress</td></tr>
+<tr><td>userstory</td><td>#462</td><td>Refinar mockups Figma para CMS Usuarios, Roles y Permisos</td><td>Alejandro Vásquez</td><td>Javam26</td><td>Sin fecha</td><td>Ready for test</td></tr>
+<tr><td>userstory</td><td>#464</td><td>Revisar proyecto, documentar componentes y optimizar configs</td><td>Carlos Guillermo Henao Velasqez</td><td>carlosHV</td><td>Sin fecha</td><td>Ready for test</td></tr>
+<tr><td>userstory</td><td>#465</td><td>Revisar código, documentar y optimizar configuraciones</td><td>Carlos Guillermo Henao Velasqez</td><td>carlosHV</td><td>Sin fecha</td><td>Ready for test</td></tr>
+<tr><td>userstory</td><td>#466</td><td>Coordinar planeación y migración de datos con backend</td><td>Anderson Rincón</td><td>Anderson_RS</td><td>Sin fecha</td><td>Ready for test</td></tr>
+<tr><td>userstory</td><td>#467</td><td>Revisar proyecto y documentar mejoras arquitectónicas</td><td>Anderson Rincón</td><td>Anderson_RS</td><td>Sin fecha</td><td>Ready for test</td></tr>
+<tr><td>userstory</td><td>#468</td><td>Coordinar reunión de planeación para migración de datos</td><td>Anderson Rincón</td><td>Anderson_RS</td><td>Sin fecha</td><td>Ready for test</td></tr>
+<tr><td>userstory</td><td>#469</td><td>Revisión arquitectura y ajustes configuraciones</td><td>Anderson Rincón</td><td>Anderson_RS</td><td>Sin fecha</td><td>Ready for test</td></tr>
+<tr><td>userstory</td><td>#470</td><td>Migrar base de datos inicial a PostgreSQL</td><td>Sin asignar</td><td>-</td><td>Sin fecha</td><td>Ready for test</td></tr>
+<tr><td>userstory</td><td>#471</td><td>Migrar módulo de población a GORM PostgreSQL</td><td>Sin asignar</td><td>-</td><td>Sin fecha</td><td>Ready for test</td></tr>
+<tr><td>userstory</td><td>#472</td><td>Implementar DTOs para educación y salud en PostgreSQL</td><td>Sin asignar</td><td>-</td><td>Sin fecha</td><td>Ready for test</td></tr>
+<tr><td>userstory</td><td>#473</td><td>Mejorar manejo de errores en handlers clave</td><td>Sin asignar</td><td>-</td><td>Sin fecha</td><td>Ready for test</td></tr>
+<tr><td>userstory</td><td>#474</td><td>Migrar módulos educación y salud a PostgreSQL</td><td>Sin asignar</td><td>-</td><td>Sin fecha</td><td>Ready for test</td></tr>
+<tr><td>userstory</td><td>#475</td><td>Visualizar solicitudes pendientes con gráficos en dashboard</td><td>Alejandro Vásquez</td><td>Javam26</td><td>Sin fecha</td><td>Ready for test</td></tr>
+<tr><td>userstory</td><td>#476</td><td>Visualizar solicitudes pendientes con gráficos en dashboard</td><td>Alejandro Vásquez</td><td>Javam26</td><td>Sin fecha</td><td>Ready for test</td></tr>
+<tr><td>userstory</td><td>#512</td><td>Revisión exhaustiva del frontend para optimizaciones</td><td>Jaider Esteban Espinosa Mesa</td><td>estebanvfx</td><td>Sin fecha</td><td>Ready for test</td></tr>
+<tr><td>userstory</td><td>#513</td><td>Revisión exhaustiva del frontend para optimizaciones</td><td>Jaider Esteban Espinosa Mesa</td><td>estebanvfx</td><td>Sin fecha</td><td>Ready for test</td></tr>
+<tr><td>userstory</td><td>#514</td><td>Implementar widget de accesibilidad en layout principal</td><td>Jaider Esteban Espinosa Mesa</td><td>estebanvfx</td><td>Sin fecha</td><td>Ready for test</td></tr>
+<tr><td>userstory</td><td>#515</td><td>Eliminar widget de accesibilidad del layout</td><td>Jaider Esteban Espinosa Mesa</td><td>estebanvfx</td><td>Sin fecha</td><td>Ready for test</td></tr>
+<tr><td>userstory</td><td>#516</td><td>Refinar UI de creación de contraseñas en registro</td><td>Jaider Esteban Espinosa Mesa</td><td>estebanvfx</td><td>Sin fecha</td><td>Ready for test</td></tr>
+<tr><td>userstory</td><td>#517</td><td>Revisar código de secciones de autenticación</td><td>Jaider Esteban Espinosa Mesa</td><td>estebanvfx</td><td>Sin fecha</td><td>Ready for test</td></tr>
+<tr><td>userstory</td><td>#518</td><td>Revisar código de autenticación para coherencia visual</td><td>Jaider Esteban Espinosa Mesa</td><td>estebanvfx</td><td>Sin fecha</td><td>Ready for test</td></tr>
+<tr><td>userstory</td><td>#538</td><td>Revisar código frontend admin-portal para dashboard</td><td>Alejandro Vásquez</td><td>Javam26</td><td>Sin fecha</td><td>Ready for test</td></tr>
+<tr><td>userstory</td><td>#539</td><td>Optimizar responsividad en estilos y componentes admin-portal</td><td>Alejandro Vásquez</td><td>Javam26</td><td>Sin fecha</td><td>Ready for test</td></tr>
+<tr><td>userstory</td><td>#540</td><td>Documentar mejoras dashboard admin-portal</td><td>Alejandro Vásquez</td><td>Javam26</td><td>Sin fecha</td><td>Ready for test</td></tr>
+<tr><td>userstory</td><td>#541</td><td>Se implementaron ajustes de configuración en los estilos y componentes reutilizables del portal, pro</td><td>Alejandro Vásquez</td><td>Javam26</td><td>Sin fecha</td><td>Code Review</td></tr>
+<tr><td>userstory</td><td>#542</td><td>Documentar mejoras en dashboard para trazabilidad</td><td>Alejandro Vásquez</td><td>Javam26</td><td>Sin fecha</td><td>Ready for test</td></tr>
+<tr><td>userstory</td><td>#543</td><td>Nuevo layout y navegación en portal CMS con rutas en español</td><td>Alejandro Vásquez</td><td>Javam26</td><td>Sin fecha</td><td>Code Review</td></tr>
+<tr><td>userstory</td><td>#544</td><td>Sistema de breadcrumbs jerárquicos y dashboard en portal CMS</td><td>Alejandro Vásquez</td><td>Javam26</td><td>Sin fecha</td><td>Code Review</td></tr>
+<tr><td>userstory</td><td>#545</td><td>Revisión código y optimización estilos en portales admin y CMS</td><td>Alejandro Vásquez</td><td>Javam26</td><td>Sin fecha</td><td>Code Review</td></tr>
+<tr><td>userstory</td><td>#546</td><td>Gestión de contenidos con previsualización y editor avanzado de publicaciones</td><td>Alejandro Vásquez</td><td>Javam26</td><td>Sin fecha</td><td>Code Review</td></tr>
+<tr><td>userstory</td><td>#547</td><td>Revisión código y estilos en portales admin y CMS</td><td>Alejandro Vásquez</td><td>Javam26</td><td>Sin fecha</td><td>Ready for test</td></tr>
+<tr><td>userstory</td><td>#548</td><td>Analizar requerimientos UX para portales de personas</td><td>Carlos Guillermo Henao Velasqez</td><td>carlosHV</td><td>Sin fecha</td><td>Ready for test</td></tr>
+<tr><td>userstory</td><td>#549</td><td>Investigar componentes UI para compatibilidad y rendimiento</td><td>Carlos Guillermo Henao Velasqez</td><td>carlosHV</td><td>Sin fecha</td><td>Ready for test</td></tr>
+<tr><td>userstory</td><td>#551</td><td>Ajustar configuración de breadcrumbs e iconos para consistencia</td><td>Carlos Guillermo Henao Velasqez</td><td>carlosHV</td><td>Sin fecha</td><td>Ready for test</td></tr>
+<tr><td>userstory</td><td>#552</td><td>Documentar cambios y ejecutar pruebas integrales de frontend</td><td>Carlos Guillermo Henao Velasqez</td><td>carlosHV</td><td>Sin fecha</td><td>Ready for test</td></tr>
+<tr><td>userstory</td><td>#553</td><td>Implementar y optimizar AccessibilityWidget</td><td>julian vasquez</td><td>julianvm</td><td>Sin fecha</td><td>Ready for test</td></tr>
+<tr><td>userstory</td><td>#554</td><td>Corregir destrucción y añadir botón arrastrable</td><td>julian vasquez</td><td>julianvm</td><td>Sin fecha</td><td>Ready for test</td></tr>
+<tr><td>userstory</td><td>#555</td><td>Desarrollar sistema de temas e integrar widget</td><td>julian vasquez</td><td>julianvm</td><td>Sin fecha</td><td>Ready for test</td></tr>
+<tr><td>userstory</td><td>#556</td><td>Externalizar deps y configurar workflow release</td><td>julian vasquez</td><td>julianvm</td><td>Sin fecha</td><td>Ready for test</td></tr>
+<tr><td>userstory</td><td>#557</td><td>Refactorizar portal y migrar paquete accesibilidad</td><td>julian vasquez</td><td>julianvm</td><td>Sin fecha</td><td>Ready for test</td></tr>
+<tr><td>userstory</td><td>#558</td><td>Actualizar ModifyResultado a uint para IDs consistentes</td><td>mateo herrera salazar</td><td>Mateohs</td><td>Sin fecha</td><td>Ready for test</td></tr>
+<tr><td>userstory</td><td>#559</td><td>Agregar campos diploma, pruebas_saber_pro y cedula a modelos</td><td>mateo herrera salazar</td><td>Mateohs</td><td>Sin fecha</td><td>In progress</td></tr>
+<tr><td>userstory</td><td>#560</td><td>Refactorizar interfaces a value receivers en repos y servicios</td><td>mateo herrera salazar</td><td>Mateohs</td><td>Sin fecha</td><td>Ready for test</td></tr>
+<tr><td>userstory</td><td>#561</td><td>Revisar código de modelos y servicios actualizados</td><td>mateo herrera salazar</td><td>Mateohs</td><td>Sin fecha</td><td>Ready for test</td></tr>
+<tr><td>userstory</td><td>#562</td><td>Documentar evolución de modelos User y Educacion</td><td>mateo herrera salazar</td><td>Mateohs</td><td>Sin fecha</td><td>Ready for test</td></tr>
+<tr><td>userstory</td><td>#563</td><td>Realizar reunión para definir requerimientos frontend clave</td><td>Jaider Esteban Espinosa Mesa</td><td>estebanvfx</td><td>Sin fecha</td><td>Ready for test</td></tr>
+<tr><td>userstory</td><td>#564</td><td>Realizar reunión equipo para definir requerimientos frontend</td><td>Jaider Esteban Espinosa Mesa</td><td>estebanvfx</td><td>Sin fecha</td><td>Ready for test</td></tr>
+<tr><td>userstory</td><td>#588</td><td>Estandarizar imports y agregar icono Rav en personas</td><td>Carlos Guillermo Henao Velasqez</td><td>carlosHV</td><td>Sin fecha</td><td>Ready for test</td></tr>
+<tr><td>userstory</td><td>#589</td><td>Agregar nuevos iconos SVG a biblioteca visual</td><td>Carlos Guillermo Henao Velasqez</td><td>carlosHV</td><td>Sin fecha</td><td>Ready for test</td></tr>
+<tr><td>userstory</td><td>#590</td><td>Mejorar hero banner de noticias con fecha/categoría</td><td>Carlos Guillermo Henao Velasqez</td><td>carlosHV</td><td>Sin fecha</td><td>Ready for test</td></tr>
+<tr><td>userstory</td><td>#591</td><td>Optimizar accesibilidad y tamaño de breadcrumb</td><td>Carlos Guillermo Henao Velasqez</td><td>carlosHV</td><td>Sin fecha</td><td>Ready for test</td></tr>
+<tr><td>userstory</td><td>#592</td><td>Integrar sidebar de ruta de atención en layouts</td><td>Carlos Guillermo Henao Velasqez</td><td>carlosHV</td><td>Sin fecha</td><td>Ready for test</td></tr>
+<tr><td>userstory</td><td>#596</td><td>Actualizar credenciales PostgreSQL y CI/CD</td><td>Anderson Rincón</td><td>Anderson_RS</td><td>Sin fecha</td><td>Ready for test</td></tr>
+<tr><td>userstory</td><td>#597</td><td>Actualizar documentación del proyecto</td><td>Anderson Rincón</td><td>Anderson_RS</td><td>Sin fecha</td><td>Ready for test</td></tr>
+<tr><td>userstory</td><td>#598</td><td>Completar refactorización de servicios backend</td><td>Anderson Rincón</td><td>Anderson_RS</td><td>Sin fecha</td><td>Ready for test</td></tr>
+<tr><td>userstory</td><td>#599</td><td>Finalizar fase 2 del desarrollo backend</td><td>Anderson Rincón</td><td>Anderson_RS</td><td>Sin fecha</td><td>Ready for test</td></tr>
+<tr><td>userstory</td><td>#600</td><td>Implementar .env.example para credenciales seguras</td><td>Anderson Rincón</td><td>Anderson_RS</td><td>Sin fecha</td><td>Ready for test</td></tr>
+<tr><td>userstory</td><td>#637</td><td>Implementación de infografía interactiva de ruta de atención para víctimas</td><td>julian vasquez</td><td>julianvm</td><td>Sin fecha</td><td>Ready for test</td></tr>
+<tr><td>userstory</td><td>#638</td><td>Normalización de rutas base y gestión de URLs en Next.js</td><td>julian vasquez</td><td>julianvm</td><td>Sin fecha</td><td>Ready for test</td></tr>
+<tr><td>userstory</td><td>#639</td><td>Sistema de confirmación de registro y notificaciones Toast</td><td>julian vasquez</td><td>julianvm</td><td>Sin fecha</td><td>Ready for test</td></tr>
+<tr><td>userstory</td><td>#640</td><td>Actualización de dependencias de accesibilidad y rutas de staging</td><td>julian vasquez</td><td>julianvm</td><td>Sin fecha</td><td>Ready for test</td></tr>
+<tr><td>userstory</td><td>#644</td><td>Optimización de extracción de datos Oracle y generación de reportes</td><td>Anghello Zapata</td><td>Anghello</td><td>Sin fecha</td><td>Ready for test</td></tr>
+<tr><td>userstory</td><td>#645</td><td>Actualización del inventario de entidades en configuración YAML</td><td>Anghello Zapata</td><td>Anghello</td><td>Sin fecha</td><td>Ready for test</td></tr>
+<tr><td>userstory</td><td>#646</td><td>Refactorización de módulos de extracción y reporte</td><td>Anghello Zapata</td><td>Anghello</td><td>Sin fecha</td><td>Ready for test</td></tr>
+<tr><td>userstory</td><td>#647</td><td>Limpieza de documentación redundante en módulos principales</td><td>Anghello Zapata</td><td>Anghello</td><td>Sin fecha</td><td>Ready for test</td></tr>
+<tr><td>userstory</td><td>#648</td><td>Optimización del manejo de errores en Vehículos y Competencias</td><td>mateo herrera salazar</td><td>Mateohs</td><td>Sin fecha</td><td>Ready for test</td></tr>
+<tr><td>userstory</td><td>#649</td><td>Integración de MongoDB y reestructuración de IDs en Ofertas Laborales</td><td>mateo herrera salazar</td><td>Mateohs</td><td>Sin fecha</td><td>Ready for test</td></tr>
+<tr><td>userstory</td><td>#650</td><td>Actualización de infraestructura a Go 1.25 y Docker</td><td>mateo herrera salazar</td><td>Mateohs</td><td>Sin fecha</td><td>Ready for test</td></tr>
+<tr><td>userstory</td><td>#651</td><td>Estandarización de respuestas API y simplificación de middleware</td><td>mateo herrera salazar</td><td>Mateohs</td><td>Sin fecha</td><td>Ready for test</td></tr>
+<tr><td>userstory</td><td>#652</td><td>Implementación de vista previa de contenidos y optimización de datatable</td><td>Alejandro Vásquez</td><td>Javam26</td><td>Sin fecha</td><td>Ready for test</td></tr>
+<tr><td>userstory</td><td>#653</td><td>Optimización de diseño responsive y navegación del portal administrativo</td><td>Alejandro Vásquez</td><td>Javam26</td><td>Sin fecha</td><td>Ready for test</td></tr>
+<tr><td>userstory</td><td>#654</td><td>Estandarización de rutas de activos y componentes de carga</td><td>Alejandro Vásquez</td><td>Javam26</td><td>Sin fecha</td><td>Ready for test</td></tr>
+<tr><td>userstory</td><td>#655</td><td>Modernización del editor de texto enriquecido y estandarización de iconos</td><td>Alejandro Vásquez</td><td>Javam26</td><td>Sin fecha</td><td>Ready for test</td></tr>
+<tr><td>userstory</td><td>#658</td><td>Implementación de módulo de población y gestión de hogares</td><td>Jaider Esteban Espinosa Mesa</td><td>estebanvfx</td><td>Sin fecha</td><td>Ready for test</td></tr>
+<tr><td>userstory</td><td>#659</td><td>Estandarización de validaciones y esquemas del asistente de registro</td><td>Jaider Esteban Espinosa Mesa</td><td>estebanvfx</td><td>Sin fecha</td><td>Ready for test</td></tr>
+<tr><td>userstory</td><td>#660</td><td>Actualización de integración con servicio de geolocalización</td><td>Jaider Esteban Espinosa Mesa</td><td>estebanvfx</td><td>Sin fecha</td><td>Ready for test</td></tr>
+<tr><td>userstory</td><td>#662</td><td>Implementar gestión completa de banners con programación y vista en tiempo real</td><td>Alejandro Vásquez</td><td>Javam26</td><td>Sin fecha</td><td>Ready for test</td></tr>
+<tr><td>userstory</td><td>#663</td><td>Optimizar layout responsivo y rendimiento del sidebar en admin‑portal</td><td>Alejandro Vásquez</td><td>Javam26</td><td>Sin fecha</td><td>Ready for test</td></tr>
+<tr><td>userstory</td><td>#664</td><td>Reemplazar editor de texto rico por versión modular con formato avanzado</td><td>Alejandro Vásquez</td><td>Javam26</td><td>Sin fecha</td><td>Ready for test</td></tr>
+<tr><td>userstory</td><td>#665</td><td>Renovar editor de texto enriquecido con componentes reutilizables</td><td>Alejandro Vásquez</td><td>Javam26</td><td>Sin fecha</td><td>Ready for test</td></tr>
+<tr><td>userstory</td><td>#674</td><td>Revisión de documentación técnica y arquitectura para actualización de infraestructura</td><td>mateo herrera salazar</td><td>Mateohs</td><td>Sin fecha</td><td>Ready for test</td></tr>
+<tr><td>userstory</td><td>#675</td><td>Revisar documentación técnica y arquitectura</td><td>mateo herrera salazar</td><td>Mateohs</td><td>Sin fecha</td><td>Ready for test</td></tr>
+<tr><td>userstory</td><td>#683</td><td>Corregir ruta API geografía para obtener datos de ubicación</td><td>Jaider Esteban Espinosa Mesa</td><td>estebanvfx</td><td>Sin fecha</td><td>Ready for test</td></tr>
+<tr><td>userstory</td><td>#684</td><td>Reestructurar código asistente virtual y extraer utilidades</td><td>Jaider Esteban Espinosa Mesa</td><td>estebanvfx</td><td>Sin fecha</td><td>Ready for test</td></tr>
+<tr><td>userstory</td><td>#685</td><td>Implementar herramienta para generar enlaces de acceso al portal</td><td>Jaider Esteban Espinosa Mesa</td><td>estebanvfx</td><td>Sin fecha</td><td>Ready for test</td></tr>
+<tr><td>userstory</td><td>#686</td><td>Renovar diseño visual de pantalla de registro con pasos progresivos</td><td>Jaider Esteban Espinosa Mesa</td><td>estebanvfx</td><td>Sin fecha</td><td>Ready for test</td></tr>
+<tr><td>userstory</td><td>#687</td><td>Integrar componentes de autenticación con el flujo general del sistema</td><td>Jaider Esteban Espinosa Mesa</td><td>estebanvfx</td><td>Sin fecha</td><td>Ready for test</td></tr>
+<tr><td>userstory</td><td>#688</td><td>Definición de arquitectura y dominios del sistema</td><td>Anderson Rincón</td><td>Anderson_RS</td><td>Sin fecha</td><td>Ready for test</td></tr>
+<tr><td>userstory</td><td>#689</td><td>Migración de datos y configuración de entorno de desarrollo</td><td>Anderson Rincón</td><td>Anderson_RS</td><td>Sin fecha</td><td>Ready for test</td></tr>
+<tr><td>userstory</td><td>#690</td><td>Configuración de contenedores Docker y entorno de desarrollo</td><td>Anderson Rincón</td><td>Anderson_RS</td><td>Sin fecha</td><td>Ready for test</td></tr>
+<tr><td>userstory</td><td>#691</td><td>Implementación de autenticación segura con Keycloak</td><td>Anderson Rincón</td><td>Anderson_RS</td><td>Sin fecha</td><td>Ready for test</td></tr>
+<tr><td>userstory</td><td>#692</td><td>Configuración de estructura global y servicios externos</td><td>Anderson Rincón</td><td>Anderson_RS</td><td>Sin fecha</td><td>Ready for test</td></tr>
+<tr><td>userstory</td><td>#693</td><td>Estandarizar modelos DTO y documentación de empleo</td><td>mateo herrera salazar</td><td>Mateohs</td><td>Sin fecha</td><td>Ready for test</td></tr>
+<tr><td>userstory</td><td>#694</td><td>Estandarizar modelos de datos y documentación</td><td>mateo herrera salazar</td><td>Mateohs</td><td>Sin fecha</td><td>Ready for test</td></tr>
+<tr><td>userstory</td><td>#695</td><td>Implementar manejo detallado de errores en ETL</td><td>Anghello Zapata</td><td>Anghello</td><td>Sin fecha</td><td>Ready for test</td></tr>
+<tr><td>userstory</td><td>#696</td><td>Implementar manejo detallado de errores en ETL de Excel a Postgres</td><td>Anghello Zapata</td><td>Anghello</td><td>Sin fecha</td><td>Ready for test</td></tr>
+<tr><td>userstory</td><td>#697</td><td>Mejorar visualización de íconos y navegación lateral</td><td>Carlos Guillermo Henao Velasqez</td><td>carlosHV</td><td>Sin fecha</td><td>Ready for test</td></tr>
+<tr><td>userstory</td><td>#699</td><td>Implementar diseño responsivo móvil y menú colapsable</td><td>Carlos Guillermo Henao Velasqez</td><td>carlosHV</td><td>Sin fecha</td><td>Ready for test</td></tr>
+<tr><td>userstory</td><td>#700</td><td>Integrar componentes y optimizar rendimiento de la aplicación</td><td>Carlos Guillermo Henao Velasqez</td><td>carlosHV</td><td>Sin fecha</td><td>Ready for test</td></tr>
+<tr><td>userstory</td><td>#701</td><td>Implementar modal para creación de nuevas solicitudes</td><td>Carlos Guillermo Henao Velasqez</td><td>carlosHV</td><td>Sin fecha</td><td>Ready for test</td></tr>
+<tr><td>userstory</td><td>#703</td><td>Portal de solicitudes ciudadanas con navegación por roles</td><td>julian vasquez</td><td>julianvm</td><td>Sin fecha</td><td>Ready for test</td></tr>
+<tr><td>userstory</td><td>#704</td><td>Actualización visual de iconos y logos optimizados</td><td>julian vasquez</td><td>julianvm</td><td>Sin fecha</td><td>Ready for test</td></tr>
+<tr><td>userstory</td><td>#705</td><td>Rediseño profundo de la sección Mis Solicitudes</td><td>julian vasquez</td><td>julianvm</td><td>Sin fecha</td><td>Ready for test</td></tr>
+<tr><td>userstory</td><td>#706</td><td>Navegación mejorada con breadcrumb y rutas reorganizadas</td><td>julian vasquez</td><td>julianvm</td><td>Sin fecha</td><td>Ready for test</td></tr>
+<tr><td>userstory</td><td>#707</td><td>Limpieza de código y estandarización de iconos SVG</td><td>julian vasquez</td><td>julianvm</td><td>Sin fecha</td><td>Ready for test</td></tr>
+<tr><td>userstory</td><td>#723</td><td>Configurar flujo de trabajo CI para compilación y publicación</td><td>Alejandro Vásquez</td><td>Javam26</td><td>Sin fecha</td><td>Ready for test</td></tr>
+<tr><td>userstory</td><td>#724</td><td>Optimizar parámetros del flujo de trabajo CI</td><td>Alejandro Vásquez</td><td>Javam26</td><td>Sin fecha</td><td>Ready for test</td></tr>
+<tr><td>userstory</td><td>#725</td><td>Validar estructura y sintaxis del archivo de automatización</td><td>Alejandro Vásquez</td><td>Javam26</td><td>Sin fecha</td><td>Ready for test</td></tr>
+<tr><td>userstory</td><td>#726</td><td>Fortalecer documentación del proceso de automatización</td><td>Alejandro Vásquez</td><td>Javam26</td><td>Sin fecha</td><td>Ready for test</td></tr>
+<tr><td>userstory</td><td>#727</td><td>Mejorar documentación API para servicio de empresas</td><td>Sin asignar</td><td>-</td><td>Sin fecha</td><td>Ready for test</td></tr>
+<tr><td>userstory</td><td>#728</td><td>Limpiar imports no utilizados en main.go</td><td>Sin asignar</td><td>-</td><td>Sin fecha</td><td>Ready for test</td></tr>
+<tr><td>userstory</td><td>#729</td><td>Fortalecer documentación API para servicio de ofertas laborales</td><td>Sin asignar</td><td>-</td><td>Sin fecha</td><td>Ready for test</td></tr>
+<tr><td>userstory</td><td>#730</td><td>Revisar anotaciones en controladores de ambos servicios</td><td>Sin asignar</td><td>-</td><td>Sin fecha</td><td>Ready for test</td></tr>
+<tr><td>userstory</td><td>#731</td><td>Ajustar documentación API corrigiendo errores menores</td><td>Sin asignar</td><td>-</td><td>Sin fecha</td><td>Ready for test</td></tr>
+<tr><td>userstory</td><td>#732</td><td>Actualizar componente decorativo y contenido de diapositivas de autenticación</td><td>Jaider Esteban Espinosa Mesa</td><td>estebanvfx</td><td>Sin fecha</td><td>Ready for test</td></tr>
+<tr><td>userstory</td><td>#733</td><td>Refactorizar estructura de componentes de interfaz de usuario</td><td>Jaider Esteban Espinosa Mesa</td><td>estebanvfx</td><td>Sin fecha</td><td>Ready for test</td></tr>
+<tr><td>userstory</td><td>#734</td><td>Analizar consistencia de componentes modificados en commits anteriores</td><td>Jaider Esteban Espinosa Mesa</td><td>estebanvfx</td><td>Sin fecha</td><td>Ready for test</td></tr>
+<tr><td>userstory</td><td>#735</td><td>Validar funcionamiento de componentes actualizados en entorno de pruebas</td><td>Jaider Esteban Espinosa Mesa</td><td>estebanvfx</td><td>Sin fecha</td><td>Ready for test</td></tr>
+<tr><td>userstory</td><td>#736</td><td>Análisis de necesidades para flujo de integración continua</td><td>Alejandro Vásquez</td><td>Javam26</td><td>Sin fecha</td><td>Ready for test</td></tr>
+<tr><td>userstory</td><td>#737</td><td>Configuración de archivos de workflow de GitHub Actions</td><td>Alejandro Vásquez</td><td>Javam26</td><td>Sin fecha</td><td>Ready for test</td></tr>
+<tr><td>userstory</td><td>#738</td><td>Implementación del flujo completo de CI/CD con publicación Docker</td><td>Alejandro Vásquez</td><td>Javam26</td><td>Sin fecha</td><td>Ready for test</td></tr>
+<tr><td>userstory</td><td>#739</td><td>Revisión del pipeline y aseguramiento de calidad</td><td>Alejandro Vásquez</td><td>Javam26</td><td>Sin fecha</td><td>Ready for test</td></tr>
+<tr><td>userstory</td><td>#740</td><td>Documentación técnica del flujo de CI/CD</td><td>Alejandro Vásquez</td><td>Javam26</td><td>Sin fecha</td><td>Ready for test</td></tr>
+<tr><td>userstory</td><td>#741</td><td>Limpieza de contenido pegado desde Word</td><td>Alejandro Vásquez</td><td>Javam26</td><td>Sin fecha</td><td>Ready for test</td></tr>
+<tr><td>userstory</td><td>#742</td><td>Optimizar el flujo de compilación y publicación automatizado</td><td>Alejandro Vásquez</td><td>Javam26</td><td>Sin fecha</td><td>Ready for test</td></tr>
+<tr><td>userstory</td><td>#743</td><td>Analizar requisitos para despliegue automatizado en entornos de prueba y producción</td><td>Alejandro Vásquez</td><td>Javam26</td><td>Sin fecha</td><td>Ready for test</td></tr>
+<tr><td>userstory</td><td>#744</td><td>Revisar y actualizar dependencias del frontend para mejorar seguridad</td><td>Alejandro Vásquez</td><td>Javam26</td><td>Sin fecha</td><td>Ready for test</td></tr>
+<tr><td>userstory</td><td>#745</td><td>Documentar el flujo de compilación y publicación del proyecto</td><td>Alejandro Vásquez</td><td>Javam26</td><td>Sin fecha</td><td>Ready for test</td></tr>
+<tr><td>userstory</td><td>#746</td><td>Configurar entorno de staging para pruebas de integración del pipeline</td><td>Alejandro Vásquez</td><td>Javam26</td><td>Sin fecha</td><td>Ready for test</td></tr>
+<tr><td>userstory</td><td>#747</td><td>Limpieza automática de estilos en editor de texto enriquecido</td><td>Alejandro Vásquez</td><td>Javam26</td><td>Sin fecha</td><td>Ready for test</td></tr>
+<tr><td>userstory</td><td>#748</td><td>Corrección de indentación y validación en pipeline CI</td><td>Alejandro Vásquez</td><td>Javam26</td><td>Sin fecha</td><td>Ready for test</td></tr>
+<tr><td>userstory</td><td>#749</td><td>Solución de variable DATABASE_URL en entorno Docker para Prisma</td><td>Alejandro Vásquez</td><td>Javam26</td><td>Sin fecha</td><td>Ready for test</td></tr>
+<tr><td>userstory</td><td>#750</td><td>Actualización de dependencias y configuración .env en CMS Portal</td><td>Alejandro Vásquez</td><td>Javam26</td><td>Sin fecha</td><td>Ready for test</td></tr>
+<tr><td>userstory</td><td>#751</td><td>Transformación del panel de control a datos dinámicos</td><td>Alejandro Vásquez</td><td>Javam26</td><td>Sin fecha</td><td>Ready for test</td></tr>
+<tr><td>userstory</td><td>#752</td><td>Consolidar documentación técnica y validar flujo de cruce de cuentas</td><td>Sin asignar</td><td>-</td><td>Sin fecha</td><td>Ready for test</td></tr>
+<tr><td>userstory</td><td>#405</td><td>Intregracion de microservicios en los portal  APE</td><td>julian vasquez</td><td>julianvm</td><td>Sin fecha</td><td>Ready for test</td></tr>
+<tr><td>userstory</td><td>#763</td><td>Generación del Listado de Tareas para el Proceso de Migración de Datos a PostgreSQL conforme a la Nueva Arquitectura</td><td>Sin asignar</td><td>-</td><td>Sin fecha</td><td>New</td></tr>
+<tr><td>userstory</td><td>#766</td><td>Simplificar selección de canal y modalidad en creación de solicitudes</td><td>Carlos Guillermo Henao Velasqez</td><td>carlosHV</td><td>Sin fecha</td><td>Ready for test</td></tr>
+<tr><td>userstory</td><td>#767</td><td>Implementar sección de Novedades con búsqueda y filtros</td><td>Carlos Guillermo Henao Velasqez</td><td>carlosHV</td><td>Sin fecha</td><td>Ready for test</td></tr>
+<tr><td>userstory</td><td>#768</td><td>Mejorar accesibilidad y experiencia de usuario en componentes reutilizables</td><td>Carlos Guillermo Henao Velasqez</td><td>carlosHV</td><td>Sin fecha</td><td>Ready for test</td></tr>
+<tr><td>userstory</td><td>#769</td><td>Fortalecer accesibilidad de la búsqueda en Novedades</td><td>Carlos Guillermo Henao Velasqez</td><td>carlosHV</td><td>Sin fecha</td><td>Ready for test</td></tr>
+<tr><td>userstory</td><td>#770</td><td>Refinar estilos visuales en sección Mis Solicitudes y página del ciudadano</td><td>Carlos Guillermo Henao Velasqez</td><td>carlosHV</td><td>Sin fecha</td><td>Ready for test</td></tr>
+<tr><td>userstory</td><td>#771</td><td>Analizar causas raíz de errores en métodos Get*ByID de empresas</td><td>Sin asignar</td><td>-</td><td>Sin fecha</td><td>Ready for test</td></tr>
+<tr><td>userstory</td><td>#772</td><td>Corregir retorno de errores en métodos Get*ByID</td><td>Sin asignar</td><td>-</td><td>Sin fecha</td><td>Ready for test</td></tr>
+<tr><td>userstory</td><td>#773</td><td>Revisar código corregido y asegurar consistencia de errores</td><td>Sin asignar</td><td>-</td><td>Sin fecha</td><td>Ready for test</td></tr>
+<tr><td>userstory</td><td>#774</td><td>Actualizar documentación técnica con nuevo comportamiento de errores</td><td>Sin asignar</td><td>-</td><td>Sin fecha</td><td>Ready for test</td></tr>
+<tr><td>userstory</td><td>#775</td><td>Desplegar en staging y validar integración de errores</td><td>Sin asignar</td><td>-</td><td>Sin fecha</td><td>Ready for test</td></tr>
+<tr><td>userstory</td><td>#776</td><td>Integrar widget de accesibilidad con ajuste de altura de línea y deshabilitación</td><td>julian vasquez</td><td>julianvm</td><td>Sin fecha</td><td>Ready for test</td></tr>
+<tr><td>userstory</td><td>#777</td><td>Implementar indicadores de notificaciones no leídas animados y accesibles</td><td>julian vasquez</td><td>julianvm</td><td>Sin fecha</td><td>Ready for test</td></tr>
+<tr><td>userstory</td><td>#778</td><td>Optimizar flujo de solicitudes con enlaces directos y navegación de retroceso</td><td>julian vasquez</td><td>julianvm</td><td>Sin fecha</td><td>Ready for test</td></tr>
+<tr><td>userstory</td><td>#779</td><td>Establecer monorepo con pnpm, Turborepo, Changesets y Prettier</td><td>julian vasquez</td><td>julianvm</td><td>Sin fecha</td><td>Ready for test</td></tr>
+<tr><td>userstory</td><td>#783</td><td>Gestión de Publicación de Ferias y Microruedas en el CMS de la Landing Page de la APE</td><td>Sin asignar</td><td>-</td><td>Sin fecha</td><td>New</td></tr>
+<tr><td>userstory</td><td>#784</td><td>Gestión de Publicación de Boletines de Prensa en el CMS de la Landing Page de la APE</td><td>Sin asignar</td><td>-</td><td>Sin fecha</td><td>New</td></tr>
+<tr><td>userstory</td><td>#792</td><td>Renovar sección de bienvenida con formulario de búsqueda de empleo</td><td>julian vasquez</td><td>julianvm</td><td>Sin fecha</td><td>Ready for test</td></tr>
+<tr><td>userstory</td><td>#801</td><td>Endpoints de panel de control con paginación y perfiles con JWT</td><td>Anderson Rincón</td><td>Anderson_RS</td><td>Sin fecha</td><td>Ready for test</td></tr>
+<tr><td>userstory</td><td>#802</td><td>Configuración de devcontainer con soporte Oracle y variables de entorno</td><td>Anderson Rincón</td><td>Anderson_RS</td><td>Sin fecha</td><td>Ready for test</td></tr>
+<tr><td>userstory</td><td>#803</td><td>Actualización de documentación y archivos de contexto para IA</td><td>Anderson Rincón</td><td>Anderson_RS</td><td>Sin fecha</td><td>Ready for test</td></tr>
+<tr><td>userstory</td><td>#804</td><td>Rediseño de página de registro y mejora del flujo de autenticación</td><td>Anderson Rincón</td><td>Anderson_RS</td><td>Sin fecha</td><td>Ready for test</td></tr>
+<tr><td>userstory</td><td>#805</td><td>Mejora en registro y autenticación con resolución de portal</td><td>Anderson Rincón</td><td>Anderson_RS</td><td>Sin fecha</td><td>Ready for test</td></tr>
+<tr><td>userstory</td><td>#806</td><td>Conectar panel de control CMS a datos dinámicos de la API</td><td>Alejandro Vásquez</td><td>Javam26</td><td>Sin fecha</td><td>Ready for test</td></tr>
+<tr><td>userstory</td><td>#807</td><td>Reemplazar editor de texto enriquecido por versión optimizada</td><td>Alejandro Vásquez</td><td>Javam26</td><td>Sin fecha</td><td>Ready for test</td></tr>
+<tr><td>userstory</td><td>#808</td><td>Añadir soporte para modalidades y enlaces en eventos</td><td>Alejandro Vásquez</td><td>Javam26</td><td>Sin fecha</td><td>Ready for test</td></tr>
+<tr><td>userstory</td><td>#809</td><td>Mejorar generación de datos de prueba con Faker</td><td>Alejandro Vásquez</td><td>Javam26</td><td>Sin fecha</td><td>Ready for test</td></tr>
+<tr><td>userstory</td><td>#811</td><td>Creación de Librería del Componente de Calendario del CMS de APE en React</td><td>Sin asignar</td><td>-</td><td>Sin fecha</td><td>New</td></tr>
+<tr><td>userstory</td><td>#812</td><td>Simplificar formulario de dirección y requerir país para municipios</td><td>Jaider Esteban Espinosa Mesa</td><td>estebanvfx</td><td>Sin fecha</td><td>Ready for test</td></tr>
+<tr><td>userstory</td><td>#813</td><td>Rediseñar pantalla de éxito con iconos decorativos y ajustes de diseño</td><td>Jaider Esteban Espinosa Mesa</td><td>estebanvfx</td><td>Sin fecha</td><td>Ready for test</td></tr>
+<tr><td>userstory</td><td>#814</td><td>Ajustar tiempo de espera en búsqueda de documentos e identificación</td><td>Jaider Esteban Espinosa Mesa</td><td>estebanvfx</td><td>Sin fecha</td><td>Ready for test</td></tr>
+<tr><td>userstory</td><td>#815</td><td>Actualizar mensajes de validación en pruebas unitarias de registro personal</td><td>Jaider Esteban Espinosa Mesa</td><td>estebanvfx</td><td>Sin fecha</td><td>Ready for test</td></tr>
+<tr><td>userstory</td><td>#816</td><td>Revisión integral del flujo del asistente paso a paso</td><td>Jaider Esteban Espinosa Mesa</td><td>estebanvfx</td><td>Sin fecha</td><td>Ready for test</td></tr>
+<tr><td>userstory</td><td>#817</td><td>Simplificar formulario de ubicación en asistente</td><td>Jaider Esteban Espinosa Mesa</td><td>estebanvfx</td><td>Sin fecha</td><td>Ready for test</td></tr>
+<tr><td>userstory</td><td>#818</td><td>Mejorar relevancia de búsqueda de municipios por país</td><td>Jaider Esteban Espinosa Mesa</td><td>estebanvfx</td><td>Sin fecha</td><td>Ready for test</td></tr>
+<tr><td>userstory</td><td>#819</td><td>Asegurar extensiones e índices geográficos al iniciar app</td><td>Jaider Esteban Espinosa Mesa</td><td>estebanvfx</td><td>Sin fecha</td><td>Ready for test</td></tr>
+<tr><td>userstory</td><td>#820</td><td>Rediseñar pantalla de éxito con íconos y mejor layout</td><td>Jaider Esteban Espinosa Mesa</td><td>estebanvfx</td><td>Sin fecha</td><td>Ready for test</td></tr>
+<tr><td>userstory</td><td>#821</td><td>Fijar versión de pnpm para compilaciones consistentes</td><td>Jaider Esteban Espinosa Mesa</td><td>estebanvfx</td><td>Sin fecha</td><td>Ready for test</td></tr>
+</tbody></table>
+</div>
+</body></html>
