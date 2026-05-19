@@ -112,8 +112,13 @@ def _fetch_open_items(
         raw = r.json()
         if isinstance(raw, list):
             out.extend(raw)
-            break
-        if isinstance(raw, dict) and "results" in raw:
+            # Taiga returns arrays with pagination via X-Pagination-Next header
+            next_url = r.headers.get("X-Pagination-Next") or r.headers.get("x-pagination-next")
+            if next_url:
+                url = next_url
+            else:
+                break
+        elif isinstance(raw, dict) and "results" in raw:
             out.extend(raw["results"])
             nxt = raw.get("next")
             url = nxt if nxt else None

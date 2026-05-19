@@ -4,6 +4,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Tareas Activas — Taiga{% if project_name %} {{ project_name }}{% endif %}</title>
+<script>
+  // Auto-refresh cada 5 minutos
+  setTimeout(function(){ window.location.reload(); }, 300000);
+</script>
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f5f7fa; color: #333; padding: 20px; }
@@ -32,7 +36,7 @@
 </head>
 <body>
 <h1>📋 Tareas Activas — Taiga {% if project_name %}{{ project_name }}{% else %}#{{ project_id }}{% endif %}</h1>
-<div class="meta">Generado: {{ generated_at }} {{ tz_label }} | Proyecto: {% if project_name %}{{ project_name }}{% else %}#{{ project_id }}{% endif %} | Total: {{ item_count }} items</div>
+<div class="meta">Generado: {{ generated_at }} {{ tz_label }} | Proyecto: {% if project_name %}{{ project_name }}{% else %}#{{ project_id }}{% endif %} | Total: {{ item_count }} items | <a href="/" title="Recargar datos desde Taiga">🔄 Actualizar</a></div>
 
 {% if error %}
 <div class="banner"><strong>No se pudo cargar Taiga.</strong> {{ error }}</div>
@@ -109,7 +113,8 @@
 
 <p class="note">
   Solo lectura. Muestra tasks y user stories con <code>status__is_closed=false</code> en Taiga.
-  Zona horaria: <code>{{ tz_label }}</code>.
+  Zona horaria: <code>{{ tz_label }}</code>. Auto-refresh cada 5 minutos.
+  Hoy: <code>{{ today_str }}</code>.
 </p>
 {% endif %}
 </body>
