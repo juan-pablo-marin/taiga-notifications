@@ -324,10 +324,11 @@ def split_and_group_items(items: list[dict[str, Any]]) -> dict[str, list[dict[st
         else:
             buckets["future"].append(norm)
 
-    # Sort each bucket by due_date, then type, then ref
+    # Sort each bucket by assignee label, then due_date, then type, then ref
     for key in buckets:
         buckets[key].sort(
             key=lambda x: (
+                x["assignee_label"].lower(),
                 x["due_date"] or "9999-12-31",
                 x["type"],
                 x["ref"] or 0,

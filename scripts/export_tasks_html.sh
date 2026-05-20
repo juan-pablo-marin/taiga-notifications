@@ -120,11 +120,11 @@ TOMORROW_FILE="$TMPDIR_WORK/tomorrow.json"
 FUTURE_FILE="$TMPDIR_WORK/future.json"
 NODATE_FILE="$TMPDIR_WORK/nodate.json"
 
-jq --arg t "$TODAY" '[.[] | select(.due_date_clean != null and .due_date_clean < $t)]' "$ALL_FILE" > "$OVERDUE_FILE"
-jq --arg t "$TODAY" '[.[] | select(.due_date_clean == $t)]' "$ALL_FILE" > "$TODAY_FILE"
-jq --arg t "$TOMORROW" '[.[] | select(.due_date_clean != null and .due_date_clean == $t)]' "$ALL_FILE" > "$TOMORROW_FILE"
-jq --arg t "$TOMORROW" '[.[] | select(.due_date_clean != null and .due_date_clean > $t)]' "$ALL_FILE" > "$FUTURE_FILE"
-jq '[.[] | select(.due_date_clean == null)]' "$ALL_FILE" > "$NODATE_FILE"
+jq --arg t "$TODAY" '[.[] | select(.due_date_clean != null and .due_date_clean < $t)] | sort_by(.assigned_to_extra_info.full_name_display // "zzz")' "$ALL_FILE" > "$OVERDUE_FILE"
+jq --arg t "$TODAY" '[.[] | select(.due_date_clean == $t)] | sort_by(.assigned_to_extra_info.full_name_display // "zzz")' "$ALL_FILE" > "$TODAY_FILE"
+jq --arg t "$TOMORROW" '[.[] | select(.due_date_clean != null and .due_date_clean == $t)] | sort_by(.assigned_to_extra_info.full_name_display // "zzz")' "$ALL_FILE" > "$TOMORROW_FILE"
+jq --arg t "$TOMORROW" '[.[] | select(.due_date_clean != null and .due_date_clean > $t)] | sort_by(.assigned_to_extra_info.full_name_display // "zzz")' "$ALL_FILE" > "$FUTURE_FILE"
+jq '[.[] | select(.due_date_clean == null)] | sort_by(.assigned_to_extra_info.full_name_display // "zzz")' "$ALL_FILE" > "$NODATE_FILE"
 
 log "Vencidas: $(jq 'length' "$OVERDUE_FILE") | Hoy: $(jq 'length' "$TODAY_FILE") | Mañana: $(jq 'length' "$TOMORROW_FILE") | Futuro: $(jq 'length' "$FUTURE_FILE") | Sin fecha: $(jq 'length' "$NODATE_FILE")"
 

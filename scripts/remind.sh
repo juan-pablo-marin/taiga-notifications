@@ -320,10 +320,11 @@ append_section_lines() {
   msg+=$'\n'
   msg+="$title ($count)"
   msg+=$'\n'
+  # Ordenar por nombre de asignado para agrupar visualmente por usuario
   while IFS= read -r row; do
     [[ -z "$row" ]] && continue
     msg+="$(build_line "$row")"
-  done < <(echo "$rows" | jq -c '.[]')
+  done < <(echo "$rows" | jq -c 'sort_by(.assigned_to_extra_info.full_name_display // "zzz") | .[]')
   echo "$msg"
 }
 
