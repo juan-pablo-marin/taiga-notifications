@@ -92,6 +92,11 @@ US_FILE="$TMPDIR_WORK/userstories.json"
 fetch_all_pages_to_file "$TOKEN" "${TAIGA_BASE_URL}/api/v1/userstories?project=${TAIGA_PROJECT_ID}" "$US_FILE"
 log "  User stories obtenidas: $(jq 'length' "$US_FILE")"
 
+log "Obteniendo miembros del proyecto..."
+MEMBERS_FILE="$TMPDIR_WORK/members.json"
+fetch_all_pages_to_file "$TOKEN" "${TAIGA_BASE_URL}/api/v1/memberships?project=${TAIGA_PROJECT_ID}" "$MEMBERS_FILE"
+log "  Miembros obtenidos: $(jq 'length' "$MEMBERS_FILE")"
+
 export TZ="${TZ:-America/Bogota}"
 TODAY="$(date +%Y-%m-%d)"
 TOMORROW="$(date -d "$TODAY + 1 day" +%Y-%m-%d 2>/dev/null || jq -nr --arg t "$TODAY" '$t | strptime("%Y-%m-%d") | mktime + 86400 | strftime("%Y-%m-%d")')"
@@ -131,12 +136,20 @@ log "Vencidas: $(jq 'length' "$OVERDUE_FILE") | Hoy: $(jq 'length' "$TODAY_FILE"
 # Generate HTML table rows from a file
 generate_table_rows_from_file() {
   local file="$1"
-  jq -r '.[] |
+  jq -r --slurpfile members "$MEMBERS_FILE" '.[] |
+    # Build assignee label: if assigned_users has multiple entries, join their names
+    (
+      if (.assigned_users // []) | length > 1 then
+        [.assigned_users[] as $uid | ($members[0][] | select(.user == $uid) | .full_name) // "Usuario #\($uid)"] | join(", ")
+      else
+        ((.assigned_to_extra_info.full_name_display) // "Sin asignar")
+      end
+    ) as $assignee_label |
     "<tr>" +
     "<td>" + (.entity_type // "task") + "</td>" +
     "<td>#" + (.ref|tostring) + "</td>" +
     "<td>" + (.subject // "Sin título") + "</td>" +
-    "<td>" + ((.assigned_to_extra_info.full_name_display) // "Sin asignar") + "</td>" +
+    "<td>" + $assignee_label + "</td>" +
     "<td>" + ((.assigned_to_extra_info.username) // "-") + "</td>" +
     "<td>" + (.due_date_clean // "Sin fecha") + "</td>" +
     "<td>" + ((.status_extra_info.name) // "-") + "</td>" +

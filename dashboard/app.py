@@ -128,6 +128,31 @@ def _fetch_open_items(
     return out
 
 
+def _fetch_project_members(client: httpx.Client, token: str) -> dict[int, str]:
+    """Fetch project members and return a dict of user_id -> full_name_display."""
+    url = f"{_base_url()}/api/v1/memberships?project={_project_id()}"
+    members: dict[int, str] = {}
+    for _ in range(50):
+        if not url:
+            break
+        r = client.get(url, headers=_auth_headers(token), timeout=60.0)
+        r.raise_for_status()
+        raw = r.json()
+        items = raw if isinstance(raw, list) else raw.get("results", [])
+        for m in items:
+            uid = m.get("user")
+            if uid is not None:
+                members[uid] = m.get("full_name") or m.get("username") or f"Usuario #{uid}"
+        if isinstance(raw, list):
+            next_url = r.headers.get("X-Pagination-Next") or r.headers.get("x-pagination-next")
+            url = next_url if next_url else None
+        elif isinstance(raw, dict):
+            url = raw.get("next")
+        else:
+            break
+    return members
+
+
 def fetch_open_tasks(client: httpx.Client, token: str) -> list[dict[str, Any]]:
     return _fetch_open_items(client, token, "tasks")
 
@@ -179,20 +204,38 @@ def parse_due_date(item: dict[str, Any]) -> date | None:
         return None
 
 
-def assignee_key_and_label(item: dict[str, Any]) -> tuple[str, str]:
+def assignee_key_and_label(item: dict[str, Any], members_map: dict[int, str] | None = None) -> tuple[str, str]:
     uid = item.get("assigned_to")
     info = item.get("assigned_to_extra_info")
-    if uid is None and not info:
+    assigned_users = item.get("assigned_users") or []
+
+    if uid is None and not info and not assigned_users:
         return ("__unassigned__", "Sin asignar")
-    if info:
+
+    # Build label from all assigned users if available
+    if assigned_users and members_map and len(assigned_users) > 1:
+        names = []
+        for u_id in assigned_users:
+            name = members_map.get(u_id)
+            if name:
+                names.append(name)
+            else:
+                names.append(f"Usuario #{u_id}")
+        label = ", ".join(names)
+        key = str(assigned_users[0])
+    elif info:
         label = info.get("full_name_display") or info.get("username") or f"Usuario #{uid}"
+        key = str(uid)
     else:
         label = f"Usuario #{uid}"
-    return (str(uid), label)
+        key = str(uid)
+
+    return (key, label)
 
 
 def build_matrix(
     items: list[dict[str, Any]],
+    members_map: dict[int, str] | None = None,
 ) -> tuple[list[str], list[dict[str, Any]], dict[str, int], int, int, int, int]:
     # (assignee_key -> label)
     labels: dict[str, str] = {}
@@ -205,7 +248,7 @@ def build_matrix(
     tomorrow = today + timedelta(days=1)
 
     for t in items:
-        key, label = assignee_key_and_label(t)
+        key, label = assignee_key_and_label(t, members_map)
         labels.setdefault(key, label)
         st = status_label(t)
         all_statuses.add(st)
@@ -263,7 +306,12 @@ def build_matrix(
     )
 
 
-def _username_from_item(item: dict[str, Any]) -> str:
+def _username_from_item(item: dict[str, Any], members_map: dict[int, str] | None = None) -> str:
+    assigned_users = item.get("assigned_users") or []
+    if assigned_users and len(assigned_users) > 1 and members_map:
+        # For multiple users, we don't have usernames in members_map easily,
+        # so just show the primary assignee username
+        pass
     info = item.get("assigned_to_extra_info")
     if info:
         return info.get("username") or "-"
@@ -280,9 +328,9 @@ def _build_item_url(item_type: str, ref: int | None) -> str:
     return f"{base}/project/{slug}/{kind}/{ref}"
 
 
-def normalize_item(raw: dict[str, Any], item_type: str) -> dict[str, Any]:
+def normalize_item(raw: dict[str, Any], item_type: str, members_map: dict[int, str] | None = None) -> dict[str, Any]:
     due = parse_due_date(raw)
-    assignee_key, assignee_label = assignee_key_and_label(raw)
+    assignee_key, assignee_label = assignee_key_and_label(raw, members_map)
     ref = raw.get("ref")
     return {
         "type": item_type,
@@ -293,12 +341,12 @@ def normalize_item(raw: dict[str, Any], item_type: str) -> dict[str, Any]:
         "due_date_display": due.isoformat() if due else "Sin fecha",
         "assignee_key": assignee_key,
         "assignee_label": assignee_label,
-        "username": _username_from_item(raw),
+        "username": _username_from_item(raw, members_map),
         "url": _build_item_url(item_type, ref),
     }
 
 
-def split_and_group_items(items: list[dict[str, Any]]) -> dict[str, list[dict[str, Any]]]:
+def split_and_group_items(items: list[dict[str, Any]], members_map: dict[int, str] | None = None) -> dict[str, list[dict[str, Any]]]:
     today = _today_in_config_tz()
     tomorrow = today + timedelta(days=1)
 
@@ -312,7 +360,7 @@ def split_and_group_items(items: list[dict[str, Any]]) -> dict[str, list[dict[st
     for it in items:
         d = parse_due_date(it)
         entity_type = it.get("entity_type", "task")
-        norm = normalize_item(it, entity_type)
+        norm = normalize_item(it, entity_type, members_map)
         if d is None:
             buckets["nodate"].append(norm)
         elif d < today:
@@ -360,6 +408,7 @@ def dashboard(request: Request) -> Any:
         with httpx.Client(verify=_http_verify()) as client:
             token = get_auth_token(client)
             project_name = fetch_project_name(client, token)
+            members_map = _fetch_project_members(client, token)
             tasks = fetch_open_tasks(client, token)
             userstories = fetch_open_userstories(client, token)
             items = [dict(t, entity_type="task") for t in tasks] + [
@@ -374,8 +423,8 @@ def dashboard(request: Request) -> Any:
                 overdue_total,
                 due_today_total,
                 due_tomorrow_total,
-            ) = build_matrix(items)
-            grouped_due = split_and_group_items(items)
+            ) = build_matrix(items, members_map)
+            grouped_due = split_and_group_items(items, members_map)
     except Exception as e:
         err = str(e)
 

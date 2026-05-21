@@ -302,7 +302,16 @@ build_line() {
   ref="$(echo "$row" | jq -r '.ref')"
   subj="$(echo "$row" | jq -r '.subject // "Sin titulo"')"
   due="$(echo "$row" | jq -r '.due_date // ""' | cut -dT -f1)"
-  assignee="$(echo "$row" | jq -r '.assigned_to_extra_info.full_name_display // "Sin asignar"')"
+  # Show multiple assignees if assigned_users has more than 1 entry
+  local au_count
+  au_count="$(echo "$row" | jq '[.assigned_users // [] | .[] ] | length')"
+  if [[ "$au_count" -gt 1 && -n "${MEMBERS_JSON:-}" ]]; then
+    assignee="$(echo "$row" | jq -r --argjson members "$MEMBERS_JSON" '
+      [.assigned_users[] as $uid | ($members[] | select(.user == $uid) | .full_name) // "Usuario #\($uid)"] | join(", ")
+    ')"
+  else
+    assignee="$(echo "$row" | jq -r '.assigned_to_extra_info.full_name_display // "Sin asignar"')"
+  fi
   link="$(row_link "$row")"
   if [[ "$kind" == "userstory" ]]; then
     prefix="US"
@@ -386,6 +395,14 @@ main() {
 
   fetch_all_pages_to_file "$token" "${TAIGA_BASE_URL}/api/v1/tasks?project=${TAIGA_PROJECT_ID}" "$tasks_file"
   fetch_all_pages_to_file "$token" "${TAIGA_BASE_URL}/api/v1/userstories?project=${TAIGA_PROJECT_ID}" "$us_file"
+
+  # Obtener miembros del proyecto para resolver múltiples asignados
+  local members_file
+  members_file="$(mktemp)"
+  fetch_all_pages_to_file "$token" "${TAIGA_BASE_URL}/api/v1/memberships?project=${TAIGA_PROJECT_ID}" "$members_file"
+  MEMBERS_JSON="$(cat "$members_file")"
+  rm -f "$members_file"
+  export MEMBERS_JSON
 
   # Combinar, agregar entity_type, filtrar por estados activos
   jq -s --argjson statuses "$ACTIVE_STATUSES" '
