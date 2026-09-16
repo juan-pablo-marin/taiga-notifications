@@ -174,7 +174,16 @@ get_token() {
 }
 
 # Estados activos para filtrado (excluye Done, Closed, Archived, etc.)
-ACTIVE_STATUSES='["New","Ready","In progress","Code Review","Ready for test","QA Testing","QA rejected"]'
+ACTIVE_STATUSES='["New","Ready","In progress","Code Review","Ready for test","QA Testing","QA Rejected","Waiting Deploy"]'
+
+# Estados que NO se notifican a los RESPONSABLES (asignados).
+# Los LIDERES sí los siguen viendo en su reporte diario.
+# Editable via env ASSIGNEE_EXCLUDE_STATUSES_JSON (array JSON). Por defecto: Ready for test.
+ASSIGNEE_EXCLUDE_STATUSES="${ASSIGNEE_EXCLUDE_STATUSES_JSON:-[\"Ready for test\"]}"
+if ! echo "$ASSIGNEE_EXCLUDE_STATUSES" | jq -e 'type=="array"' >/dev/null 2>&1; then
+  log "ASSIGNEE_EXCLUDE_STATUSES_JSON invalido; usando [\"Ready for test\"]"
+  ASSIGNEE_EXCLUDE_STATUSES='["Ready for test"]'
+fi
 
 # Función genérica de paginación usando archivos temporales y header X-Pagination-Next
 fetch_all_pages_to_file() {
@@ -432,6 +441,14 @@ main() {
   combined="$(jq -n --argjson a "$due_tomorrow" --argjson b "$due_today" --argjson c "$overdue" '$a + $b + $c')"
   miss="$(count_unmapped_assignees "$combined")"
 
+  # Conjuntos para RESPONSABLES: excluir estados configurados (p. ej. "Ready for test").
+  # Los LIDERES siguen recibiendo due_tomorrow/due_today/overdue completos.
+  local a_due_tomorrow a_due_today a_overdue combined_assignee
+  a_due_tomorrow="$(echo "$due_tomorrow" | jq --argjson ex "$ASSIGNEE_EXCLUDE_STATUSES" '[.[] | select(((.status_extra_info.name) // "") as $s | ($ex | index($s)) == null)]')"
+  a_due_today="$(echo "$due_today" | jq --argjson ex "$ASSIGNEE_EXCLUDE_STATUSES" '[.[] | select(((.status_extra_info.name) // "") as $s | ($ex | index($s)) == null)]')"
+  a_overdue="$(echo "$overdue" | jq --argjson ex "$ASSIGNEE_EXCLUDE_STATUSES" '[.[] | select(((.status_extra_info.name) // "") as $s | ($ex | index($s)) == null)]')"
+  combined_assignee="$(jq -n --argjson a "$a_due_tomorrow" --argjson b "$a_due_today" --argjson c "$a_overdue" '$a + $b + $c')"
+
   lead_ids="$(list_lead_ids)"
   leaders_count="$(echo "$lead_ids" | jq 'length')"
   [[ "$send_leads" -eq 1 && "$leaders_count" -eq 0 ]] && { log "No hay lideres mapeados en DISCORD_USER_MAP_JSON"; exit 1; }
@@ -450,9 +467,9 @@ main() {
   if [[ "$send_assignees" -eq 1 ]]; then
     while IFS= read -r uid; do
       [[ -z "$uid" ]] && continue
-      a_tom="$(filter_rows_for_discord_uid "$uid" "$due_tomorrow")"
-      a_today="$(filter_rows_for_discord_uid "$uid" "$due_today")"
-      a_over="$(filter_rows_for_discord_uid "$uid" "$overdue")"
+      a_tom="$(filter_rows_for_discord_uid "$uid" "$a_due_tomorrow")"
+      a_today="$(filter_rows_for_discord_uid "$uid" "$a_due_today")"
+      a_over="$(filter_rows_for_discord_uid "$uid" "$a_overdue")"
       if [[ "$(echo "$a_tom" | jq 'length')" -eq 0 && "$(echo "$a_today" | jq 'length')" -eq 0 && "$(echo "$a_over" | jq 'length')" -eq 0 ]]; then
         continue
       fi
@@ -460,7 +477,7 @@ main() {
       already_sent_today "$dedup" && { skip=$((skip+1)); continue; }
       msg="$(build_assignee_report "$tomorrow" "$today" "$a_tom" "$a_today" "$a_over")"
       if send_dm "$uid" "$msg"; then mark_sent_today "$dedup"; sent=$((sent+1)); sent_assignees=$((sent_assignees+1)); else failed=$((failed+1)); fi
-    done < <(collect_assignee_uids "$combined" "$lead_ids")
+    done < <(collect_assignee_uids "$combined_assignee" "$lead_ids")
   fi
 
   log "DM enviados=$sent | fallidos=$failed | dm_lideres=$sent_leads | dm_responsables=$sent_assignees | ya_enviados_hoy=$skip | lideres_mapeados=$leaders_count | sin_mapeo_responsable=$miss"
