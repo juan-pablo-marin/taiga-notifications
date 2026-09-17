@@ -8,16 +8,18 @@ from __future__ import annotations
 import os
 from collections import defaultdict
 from datetime import date, datetime, timedelta
+from pathlib import Path
 from typing import Any
 from zoneinfo import ZoneInfo
 
 import httpx
 from fastapi import FastAPI, Request
-from fastapi.responses import HTMLResponse
+from fastapi.responses import FileResponse, HTMLResponse
 from fastapi.templating import Jinja2Templates
 
 templates = Jinja2Templates(directory="templates")
 app = FastAPI(title="Taiga — resumen por involucrado", docs_url=None, redoc_url=None)
+REPORT_FILE = Path("/output/tareas_activas.html")
 
 
 def _env_clean(name: str) -> str:
@@ -388,6 +390,9 @@ def split_and_group_items(items: list[dict[str, Any]], members_map: dict[int, st
 
 @app.get("/", response_class=HTMLResponse)
 def dashboard(request: Request) -> Any:
+    if REPORT_FILE.is_file():
+        return FileResponse(REPORT_FILE, media_type="text/html")
+
     err: str | None = None
     project_name: str | None = None
     status_cols: list[str] = []
