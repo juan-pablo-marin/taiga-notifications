@@ -3,3 +3,8 @@
 __pycache__/
 .venv/
 *.pyc
+
+# Artefacto generado por scripts/export_tasks_html.sh (cron / botón "Actualizar
+# datos"). Cambia en cada ejecución y en cada entorno (local, VPS), por lo que
+# versionarlo solo genera conflictos de merge sin aportar nada útil.
+output/*.html

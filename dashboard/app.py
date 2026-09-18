@@ -394,6 +394,7 @@ def split_and_group_items(items: list[dict[str, Any]], members_map: dict[int, st
 
 @app.get("/resumen", response_class=HTMLResponse)
 def dashboard(request: Request) -> Any:
+    """Vista matriz (involucrados x estado), calculada en vivo contra Taiga."""
     err: str | None = None
     project_name: str | None = None
     status_cols: list[str] = []
