@@ -6,6 +6,8 @@ Usa las mismas variables TAIGA_* que el notificador a Discord.
 from __future__ import annotations
 
 import os
+import shlex
+import subprocess
 from collections import defaultdict
 from datetime import date, datetime, timedelta
 from typing import Any
@@ -13,11 +15,15 @@ from zoneinfo import ZoneInfo
 
 import httpx
 from fastapi import FastAPI, Request
-from fastapi.responses import HTMLResponse
+from fastapi.responses import FileResponse, HTMLResponse, JSONResponse
 from fastapi.templating import Jinja2Templates
 
 templates = Jinja2Templates(directory="templates")
 app = FastAPI(title="Taiga — resumen por involucrado", docs_url=None, redoc_url=None)
+
+# Reporte estático generado por el script de export (mismo que usa el cron).
+REPORT_HTML_PATH = os.environ.get("REPORT_HTML_PATH", "/output/tareas_activas.html")
+EXPORT_SCRIPT_PATH = os.environ.get("EXPORT_SCRIPT_PATH", "/scripts/export_tasks_html.sh")
 
 
 def _env_clean(name: str) -> str:
@@ -386,7 +392,7 @@ def split_and_group_items(items: list[dict[str, Any]], members_map: dict[int, st
     return buckets
 
 
-@app.get("/", response_class=HTMLResponse)
+@app.get("/resumen", response_class=HTMLResponse)
 def dashboard(request: Request) -> Any:
     err: str | None = None
     project_name: str | None = None
@@ -455,6 +461,76 @@ def dashboard(request: Request) -> Any:
             "generated_at": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
             "tz_label": os.environ.get("TZ", "UTC"),
         },
+    )
+
+
+def _serve_report() -> Any:
+    """Sirve el reporte detallado (tareas + issues con filtros) generado por el export."""
+    if os.path.exists(REPORT_HTML_PATH):
+        # no-cache: tras regenerar, el navegador siempre ve la versión nueva.
+        return FileResponse(
+            REPORT_HTML_PATH,
+            media_type="text/html",
+            headers={"Cache-Control": "no-store, must-revalidate"},
+        )
+    return HTMLResponse(
+        "<h1>Reporte aún no generado</h1>"
+        "<p>Genera el reporte con el botón <strong>Actualizar datos</strong> "
+        "o espera la ejecución programada.</p>",
+        status_code=404,
+    )
+
+
+@app.get("/")
+def root() -> Any:
+    """La raíz (solo URL + puerto) carga directamente el reporte detallado."""
+    return _serve_report()
+
+
+# Alias opcional; la raíz "/" es la ruta principal.
+@app.get("/reporte")
+def reporte() -> Any:
+    return _serve_report()
+
+
+@app.post("/regenerate")
+def regenerate() -> Any:
+    """Ejecuta el script de export on-demand y reescribe el reporte estático.
+
+    Reutiliza exactamente el mismo generador que usa el cron, de modo que no
+    hay lógica duplicada. Se pasa el script por `tr -d '\\r'` para tolerar
+    saltos de línea de Windows (CRLF) al montarlo desde el host.
+    """
+    if not os.path.exists(EXPORT_SCRIPT_PATH):
+        return JSONResponse(
+            {"ok": False, "error": f"No se encuentra el script: {EXPORT_SCRIPT_PATH}"},
+            status_code=500,
+        )
+    cmd = (
+        f"tr -d '\\r' < {shlex.quote(EXPORT_SCRIPT_PATH)} "
+        f"| bash -s -- {shlex.quote(REPORT_HTML_PATH)}"
+    )
+    try:
+        proc = subprocess.run(
+            ["sh", "-c", cmd],
+            capture_output=True,
+            text=True,
+            timeout=600,
+        )
+    except subprocess.TimeoutExpired:
+        return JSONResponse(
+            {"ok": False, "error": "El export superó el tiempo límite (600s)."},
+            status_code=504,
+        )
+    ok = proc.returncode == 0
+    return JSONResponse(
+        {
+            "ok": ok,
+            "returncode": proc.returncode,
+            "generated_at": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+            "log_tail": (proc.stderr or "")[-1200:],
+        },
+        status_code=200 if ok else 500,
     )
 
 

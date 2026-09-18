@@ -1,7 +1,8 @@
 FROM python:3.12-alpine
 
 WORKDIR /app
-RUN apk add --no-cache curl
+# curl: healthcheck; bash+jq+tzdata: para ejecutar /scripts/export_tasks_html.sh on-demand
+RUN apk add --no-cache curl bash jq tzdata
 
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt

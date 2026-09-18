@@ -36,7 +36,7 @@
 </head>
 <body>
 <h1>📋 Tareas Activas — Taiga {% if project_name %}{{ project_name }}{% else %}#{{ project_id }}{% endif %}</h1>
-<div class="meta">Generado: {{ generated_at }} {{ tz_label }} | Proyecto: {% if project_name %}{{ project_name }}{% else %}#{{ project_id }}{% endif %} | Total: {{ item_count }} items | <a href="/" title="Recargar datos desde Taiga">🔄 Actualizar</a></div>
+<div class="meta">Generado: {{ generated_at }} {{ tz_label }} | Proyecto: {% if project_name %}{{ project_name }}{% else %}#{{ project_id }}{% endif %} | Total: {{ item_count }} items | <a href="/resumen" title="Recargar datos desde Taiga">🔄 Actualizar</a> | <a href="/" title="Ver reporte detallado">📋 Reporte</a></div>
 
 {% if error %}
 <div class="banner"><strong>No se pudo cargar Taiga.</strong> {{ error }}</div>

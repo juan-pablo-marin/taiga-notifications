@@ -260,6 +260,11 @@ cat > "$OUTPUT_FILE" <<'HEADER'
   button.btn:hover { background: var(--accent-weak); border-color: var(--accent); }
   button.btn.primary { background: var(--accent); border-color: var(--accent); color: #fff; }
   button.btn.primary:hover { filter: brightness(1.05); }
+  button.btn.refresh { background: #16a34a; border-color: #16a34a; color: #fff; }
+  button.btn.refresh:hover { filter: brightness(1.05); }
+  button.btn:disabled { opacity: .65; cursor: default; filter: none; }
+  @keyframes kf-spin { to { transform: rotate(360deg); } }
+  .spin { display: inline-block; animation: kf-spin .8s linear infinite; }
 
   /* Sections */
   .section { margin-bottom: 28px; }
@@ -289,6 +294,26 @@ cat > "$OUTPUT_FILE" <<'HEADER'
 
   .empty { padding: 22px; text-align: center; color: var(--muted); }
   .note { margin-top: 20px; text-align: center; color: var(--muted); font-size: 0.82em; }
+
+  /* Gráfica por responsable */
+  .chart-card { background: var(--panel); border: 1px solid var(--border); border-radius: 10px; padding: 16px 18px 8px; margin-bottom: 22px; box-shadow: 0 1px 3px rgba(16,24,40,0.04); }
+  .chart-card h2 { font-size: 1.05em; display: flex; align-items: center; gap: 8px; margin-bottom: 4px; }
+  .chart-card .chart-sub { color: var(--muted); font-size: 0.82em; margin-bottom: 10px; }
+  .chart-legend { display: flex; gap: 16px; align-items: center; margin-bottom: 6px; font-size: 0.82em; color: #55617a; }
+  .chart-legend .sw { display: inline-block; width: 11px; height: 11px; border-radius: 3px; margin-right: 5px; vertical-align: middle; }
+  .sw.work { background: #2563eb; }
+  .sw.issue { background: #b03a2e; }
+  .chart-toggle { margin-left: auto; display: flex; gap: 6px; }
+  .chart-toggle button { border: 1px solid var(--border); background: #fff; color: #55617a; font-size: 0.78em; padding: 3px 10px; border-radius: 999px; cursor: pointer; font-weight: 600; }
+  .chart-toggle button.active { background: var(--accent); border-color: var(--accent); color: #fff; }
+  #chart-assignees { width: 100%; display: block; overflow: visible; }
+  .chart-row-label { font-size: 12px; fill: #2c3e50; }
+  .chart-row-total { font-size: 12px; fill: #2c3e50; font-weight: 600; }
+  .chart-bar-work { fill: #2563eb; cursor: pointer; }
+  .chart-bar-issue { fill: #b03a2e; cursor: pointer; }
+  .chart-bar-work:hover, .chart-bar-issue:hover { opacity: .85; }
+  .chart-row:hover .chart-row-label { fill: var(--accent); }
+  .chart-empty { padding: 18px; text-align: center; color: var(--muted); font-size: 0.9em; }
 </style>
 </head>
 <body>
@@ -345,10 +370,26 @@ cat > "$OUTPUT_FILE" <<'HEADER'
       <select id="f-severity"><option value="">Todas</option></select>
     </div>
     <div class="actions">
+      <button class="btn refresh" id="btn-refresh" type="button" title="Regenera los datos desde Taiga ahora (no espera al proceso programado)">🔄 Actualizar datos</button>
       <button class="btn" id="btn-clear" type="button">Limpiar</button>
       <button class="btn primary" id="btn-csv" type="button">⬇ Exportar CSV</button>
     </div>
   </div>
+</div>
+
+<div class="chart-card">
+  <h2>📊 Carga por responsable</h2>
+  <div class="chart-sub">Cantidad de pendientes por persona (respeta los filtros activos). Haz clic en una barra para filtrar por ese responsable.</div>
+  <div class="chart-legend">
+    <span><span class="sw work"></span>Tareas &amp; User Stories</span>
+    <span><span class="sw issue"></span>Issues</span>
+    <div class="chart-toggle" role="group" aria-label="Ordenar gráfica">
+      <button type="button" id="chart-sort-total" class="active" data-sort="total">Mayor carga</button>
+      <button type="button" id="chart-sort-name" data-sort="name">Alfabético</button>
+    </div>
+  </div>
+  <svg id="chart-assignees" role="img" aria-label="Carga por responsable"></svg>
+  <div class="chart-empty" id="chart-empty" hidden>No hay datos para graficar con los filtros actuales.</div>
 </div>
 
 <div class="section work">
@@ -461,6 +502,7 @@ cat >> "$OUTPUT_FILE" <<'SCRIPT'
     work: { key: "due", dir: 1 },
     issue: { key: "due", dir: 1 }
   };
+  let chartSort = "total"; // "total" | "name"
 
   const controls = ["f-search", "f-group", "f-type", "f-assignee", "f-status", "f-due", "f-priority", "f-severity"];
   controls.forEach(id => {
@@ -473,6 +515,38 @@ cat >> "$OUTPUT_FILE" <<'SCRIPT'
     render();
   });
   document.getElementById("btn-csv").addEventListener("click", exportCsv);
+
+  // Botón "Actualizar datos": pide al panel regenerar el reporte desde Taiga.
+  // Solo funciona cuando el reporte se sirve desde el dashboard (mismo origen);
+  // abierto como archivo local muestra un aviso claro.
+  const btnRefresh = document.getElementById("btn-refresh");
+  if (btnRefresh) {
+    btnRefresh.addEventListener("click", async () => {
+      const original = btnRefresh.innerHTML;
+      btnRefresh.disabled = true;
+      btnRefresh.innerHTML = '<span class="spin">🔄</span> Actualizando...';
+      try {
+        const resp = await fetch("/regenerate", { method: "POST", headers: { "Accept": "application/json" } });
+        let data = {};
+        try { data = await resp.json(); } catch (e) {}
+        if (resp.ok && data.ok) {
+          btnRefresh.innerHTML = "✅ Actualizado";
+          location.reload();
+        } else {
+          btnRefresh.disabled = false;
+          btnRefresh.innerHTML = original;
+          alert("No se pudo actualizar el reporte.\n" +
+                (data.error || ("HTTP " + resp.status)) +
+                (data.log_tail ? "\n\nDetalle:\n" + data.log_tail : ""));
+        }
+      } catch (e) {
+        btnRefresh.disabled = false;
+        btnRefresh.innerHTML = original;
+        alert("El botón 'Actualizar datos' solo funciona cuando abres el reporte " +
+              "desde el panel (http://.../reporte), no como archivo local.\n\nDetalle: " + e.message);
+      }
+    });
+  }
 
   // Tarjetas KPI clicables: limpian los filtros actuales y aplican el nuevo.
   function activateCard(card) {
@@ -492,6 +566,16 @@ cat >> "$OUTPUT_FILE" <<'SCRIPT'
       if (card) { e.preventDefault(); activateCard(card); }
     }
   });
+
+  // Toggle de orden de la gráfica por responsable
+  document.getElementById("chart-sort-total").addEventListener("click", () => setChartSort("total"));
+  document.getElementById("chart-sort-name").addEventListener("click", () => setChartSort("name"));
+  function setChartSort(mode) {
+    chartSort = mode;
+    document.getElementById("chart-sort-total").classList.toggle("active", mode === "total");
+    document.getElementById("chart-sort-name").classList.toggle("active", mode === "name");
+    render();
+  }
 
   // Sortable headers
   document.querySelectorAll("#table-work thead th, #table-issue thead th").forEach(th => {
@@ -519,6 +603,12 @@ cat >> "$OUTPUT_FILE" <<'SCRIPT'
   window.addEventListener("pageshow", resetFilters);
 
   resetFilters();
+
+  let resizeTimer = null;
+  window.addEventListener("resize", () => {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(render, 150);
+  });
 
   // ---- Funciones --------------------------------------------------------
   function getFilters() {
@@ -571,6 +661,7 @@ cat >> "$OUTPUT_FILE" <<'SCRIPT'
     const filtered = applyFilters(DATA, f);
 
     renderKpis(filtered);
+    renderAssigneeChart(filtered, f);
     updateHeaderArrows();
 
     const work = sortRows(filtered.filter(d => d.group === "work"), "work");
@@ -581,6 +672,125 @@ cat >> "$OUTPUT_FILE" <<'SCRIPT'
 
     document.getElementById("count-work").textContent = work.length + " items";
     document.getElementById("count-issue").textContent = issues.length + " items";
+  }
+
+  // ---- Gráfica de carga por responsable (SVG, sin librerías) -----------
+  function renderAssigneeChart(rows, currentFilters) {
+    const svg = document.getElementById("chart-assignees");
+    const emptyEl = document.getElementById("chart-empty");
+
+    const byAssignee = new Map();
+    rows.forEach(d => {
+      const key = d.assignee || "Sin asignar";
+      if (!byAssignee.has(key)) byAssignee.set(key, { work: 0, issue: 0 });
+      byAssignee.get(key)[d.group === "issue" ? "issue" : "work"]++;
+    });
+
+    let entries = Array.from(byAssignee.entries()).map(([name, v]) => ({
+      name, work: v.work, issue: v.issue, total: v.work + v.issue
+    }));
+
+    if (chartSort === "total") {
+      entries.sort((a, b) => b.total - a.total || cmpText(a.name, b.name));
+    } else {
+      entries.sort((a, b) => cmpText(a.name, b.name));
+    }
+
+    if (entries.length === 0) {
+      svg.innerHTML = "";
+      svg.setAttribute("height", 0);
+      emptyEl.hidden = false;
+      return;
+    }
+    emptyEl.hidden = true;
+
+    const rowH = 26;
+    const gap = 6;
+    const topPad = 4;
+    const leftLabelW = 190;
+    const rightPad = 46;
+    const width = Math.max(svg.clientWidth || svg.parentElement.clientWidth || 600, 320);
+    const barAreaW = Math.max(width - leftLabelW - rightPad, 80);
+    const maxTotal = Math.max(...entries.map(e => e.total), 1);
+    const height = topPad * 2 + entries.length * (rowH + gap);
+
+    svg.setAttribute("viewBox", "0 0 " + width + " " + height);
+    svg.setAttribute("height", height);
+    svg.innerHTML = "";
+
+    const ns = "http://www.w3.org/2000/svg";
+    entries.forEach((e, i) => {
+      const y = topPad + i * (rowH + gap);
+      const g = document.createElementNS(ns, "g");
+      g.setAttribute("class", "chart-row");
+
+      const label = document.createElementNS(ns, "text");
+      label.setAttribute("x", leftLabelW - 10);
+      label.setAttribute("y", y + rowH / 2 + 4);
+      label.setAttribute("text-anchor", "end");
+      label.setAttribute("class", "chart-row-label");
+      label.textContent = truncateLabel(e.name, 26);
+      if (e.name.length > 26) {
+        const t = document.createElementNS(ns, "title");
+        t.textContent = e.name;
+        label.appendChild(t);
+      }
+      g.appendChild(label);
+
+      const workW = maxTotal > 0 ? (e.work / maxTotal) * barAreaW : 0;
+      const issueW = maxTotal > 0 ? (e.issue / maxTotal) * barAreaW : 0;
+      const barH = rowH - 8;
+      const barY = y + 4;
+
+      if (e.work > 0) {
+        const r1 = document.createElementNS(ns, "rect");
+        r1.setAttribute("x", leftLabelW);
+        r1.setAttribute("y", barY);
+        r1.setAttribute("width", Math.max(workW, 2));
+        r1.setAttribute("height", barH);
+        r1.setAttribute("rx", 3);
+        r1.setAttribute("class", "chart-bar-work");
+        r1.addEventListener("click", () => filterByAssignee(e.name));
+        const t1 = document.createElementNS(ns, "title");
+        t1.textContent = e.name + " — Tareas/US: " + e.work;
+        r1.appendChild(t1);
+        g.appendChild(r1);
+      }
+      if (e.issue > 0) {
+        const r2 = document.createElementNS(ns, "rect");
+        r2.setAttribute("x", leftLabelW + workW);
+        r2.setAttribute("y", barY);
+        r2.setAttribute("width", Math.max(issueW, 2));
+        r2.setAttribute("height", barH);
+        r2.setAttribute("rx", 3);
+        r2.setAttribute("class", "chart-bar-issue");
+        r2.addEventListener("click", () => filterByAssignee(e.name));
+        const t2 = document.createElementNS(ns, "title");
+        t2.textContent = e.name + " — Issues: " + e.issue;
+        r2.appendChild(t2);
+        g.appendChild(r2);
+      }
+
+      const totalLabel = document.createElementNS(ns, "text");
+      totalLabel.setAttribute("x", leftLabelW + Math.max(workW + issueW, 2) + 8);
+      totalLabel.setAttribute("y", y + rowH / 2 + 4);
+      totalLabel.setAttribute("class", "chart-row-total");
+      totalLabel.textContent = String(e.total);
+      g.appendChild(totalLabel);
+
+      svg.appendChild(g);
+    });
+  }
+
+  function filterByAssignee(name) {
+    document.getElementById("f-assignee").value = name;
+    render();
+    const section = document.querySelector(".section.work");
+    if (section) section.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+
+  function truncateLabel(s, max) {
+    return s.length > max ? s.slice(0, max - 1) + "…" : s;
   }
 
   function renderKpis(rows) {

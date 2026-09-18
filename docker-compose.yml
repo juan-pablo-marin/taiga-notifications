@@ -24,6 +24,11 @@ services:
     environment:
       TZ: ${TZ:-America/Bogota}
       TAIGA_DASHBOARD_PORT: "8086"
+    volumes:
+      # Reporte generado (lectura/escritura) y script de export (solo lectura)
+      # para permitir el botón "Actualizar datos" (POST /regenerate).
+      - ./output:/output
+      - ./scripts:/scripts:ro
     ports:
       # 0.0.0.0 para acceso externo en el VPS
       - "0.0.0.0:${TAIGA_DASHBOARD_PUBLISH_PORT:-8086}:8086"
