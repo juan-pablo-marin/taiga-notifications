@@ -314,6 +314,38 @@ cat > "$OUTPUT_FILE" <<'HEADER'
   .chart-bar-work:hover, .chart-bar-issue:hover { opacity: .85; }
   .chart-row:hover .chart-row-label { fill: var(--accent); }
   .chart-empty { padding: 18px; text-align: center; color: var(--muted); font-size: 0.9em; }
+
+  /* Compacta controles y tarjetas sin cambiar la composicion de escritorio. */
+  @media (max-width: 640px) {
+    html, body { width: 100%; min-width: 0; }
+    body { padding: 14px 10px 22px; overflow-x: hidden; }
+    h1 { font-size: 1.18em; line-height: 1.35; align-items: flex-start; }
+    .meta { line-height: 1.55; }
+    .kpis, .toolbar, .chart-card, .section { width: 100%; min-width: 0; }
+    .kpis { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; margin: 14px 0; }
+    .kpi { padding: 11px 12px; }
+    .kpi .value { font-size: 1.45em; }
+    .toolbar { padding: 12px; margin-bottom: 14px; }
+    .toolbar .row { gap: 9px; }
+    .field, .field.grow { flex: 1 1 100%; min-width: 0; }
+    .field input, .field select { width: 100%; min-width: 0; min-height: 40px; }
+    .toolbar .actions { width: 100%; margin-left: 0; display: grid; grid-template-columns: 1fr 1fr; }
+    .toolbar .actions .refresh { grid-column: 1 / -1; }
+    button.btn { min-height: 40px; padding: 8px 10px; }
+    .chart-card { padding: 13px 12px 8px; margin-bottom: 16px; }
+    .chart-card h2 { font-size: 1em; }
+    .chart-sub { line-height: 1.45; }
+    .chart-legend { flex-wrap: wrap; gap: 8px 12px; line-height: 1.4; }
+    .chart-toggle { width: 100%; margin-left: 0; }
+    .chart-toggle button { flex: 1; min-height: 34px; }
+    .section { margin-bottom: 20px; }
+    .section > h2 { padding: 11px 12px; font-size: 1em; }
+    .table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+    table { min-width: 760px; }
+    th, td { padding: 9px 10px; }
+    td.subject { min-width: 230px; }
+    .note { line-height: 1.5; }
+  }
 </style>
 </head>
 <body>
@@ -707,9 +739,9 @@ cat >> "$OUTPUT_FILE" <<'SCRIPT'
     const rowH = 26;
     const gap = 6;
     const topPad = 4;
-    const leftLabelW = 190;
     const rightPad = 46;
     const width = Math.max(svg.clientWidth || svg.parentElement.clientWidth || 600, 320);
+    const leftLabelW = width < 520 ? 120 : 190;
     const barAreaW = Math.max(width - leftLabelW - rightPad, 80);
     const maxTotal = Math.max(...entries.map(e => e.total), 1);
     const height = topPad * 2 + entries.length * (rowH + gap);
@@ -729,8 +761,9 @@ cat >> "$OUTPUT_FILE" <<'SCRIPT'
       label.setAttribute("y", y + rowH / 2 + 4);
       label.setAttribute("text-anchor", "end");
       label.setAttribute("class", "chart-row-label");
-      label.textContent = truncateLabel(e.name, 26);
-      if (e.name.length > 26) {
+      const labelMaxLength = width < 520 ? 16 : 26;
+      label.textContent = truncateLabel(e.name, labelMaxLength);
+      if (e.name.length > labelMaxLength) {
         const t = document.createElementNS(ns, "title");
         t.textContent = e.name;
         label.appendChild(t);
